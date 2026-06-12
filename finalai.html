@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<!-- saved from url=(0124)file:///Users/frank/Downloads/AI%E8%A3%85%E9%85%8D%E6%89%8B%E5%86%8C_%E4%BA%94%E5%B1%82%E7%BF%BB%E9%A1%B5%E7%89%88_1.html#p1 -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 装配手册 · 五层翻页版</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./finalai_files/css2" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f4ec; --ink:#1c2430; --blue:#1f4e8c; --blue-deep:#143257;
+  --orange:#e0662e; --teal:#2a8f7c; --gold:#c8922a; --line:#d8d3c4; --card:#fff;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --serif:'Noto Serif SC',serif; --sans:'Noto Sans SC',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.7;
+  background-image:linear-gradient(rgba(31,78,140,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(31,78,140,.05) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+.wrap{max-width:1060px;margin:0 auto;padding:0 22px;}
+
+/* ===== 顶部导航 ===== */
+#topnav{position:sticky;top:0;z-index:50;background:rgba(246,244,236,.95);backdrop-filter:blur(8px);border-bottom:1.5px solid var(--ink);}
+#progress{height:4px;background:linear-gradient(90deg,var(--teal),var(--gold),var(--orange));width:0%;transition:width .3s;}
+.nav-inner{display:flex;align-items:center;gap:6px;padding:10px 16px;overflow-x:auto;scrollbar-width:none;max-width:1060px;margin:0 auto;}
+.nav-inner::-webkit-scrollbar{display:none;}
+.nav-brand{font-family:var(--serif);font-weight:900;font-size:15px;white-space:nowrap;margin-right:8px;}
+.nv{
+  font-size:12.5px;font-weight:700;white-space:nowrap;border:1.5px solid var(--line);
+  background:#fff;border-radius:20px;padding:5px 13px;cursor:pointer;font-family:var(--sans);transition:.2s;
+}
+.nv.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+.nv .n{font-family:var(--mono);font-size:10px;opacity:.6;margin-right:3px;}
+
+/* ===== 页面切换 ===== */
+.page{display:none;padding-bottom:60px;animation:fadein .35s ease;}
+.page.show{display:block;}
+@keyframes fadein{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+@media(prefers-reduced-motion:reduce){.page{animation:none;} *{transition:none!important;animation:none!important;}}
+
+.pg-head{padding:42px 0 6px;}
+.pg-tag{font-family:var(--mono);font-size:12px;color:var(--blue);letter-spacing:3px;}
+.pg-head h1{font-family:var(--serif);font-weight:900;font-size:clamp(26px,4.5vw,38px);margin:6px 0 4px;}
+.pg-desc{color:#666;font-size:14px;max-width:640px;margin-bottom:24px;}
+.metaline{font-size:13px;color:#8a6418;background:#fdf8ec;border:1px dashed var(--gold);border-radius:10px;padding:9px 14px;display:inline-block;margin-bottom:20px;}
+
+/* 翻页脚 */
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:46px;border-top:1.5px dashed var(--line);padding-top:18px;}
+.pager button{
+  border:1.5px solid var(--ink);background:#fff;border-radius:10px;padding:11px 18px;
+  font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;max-width:48%;text-align:left;
+}
+.pager button:hover{background:var(--ink);color:#fff;}
+.pager button small{display:block;font-weight:400;font-size:11px;opacity:.6;font-family:var(--mono);}
+.pager button.next{text-align:right;}
+.pager button:disabled{opacity:.25;cursor:default;}
+.pager button:disabled:hover{background:#fff;color:var(--ink);}
+
+/* ===== 通用装置卡 ===== */
+.rig{background:var(--card);border:1.5px solid var(--ink);border-radius:14px;box-shadow:5px 5px 0 rgba(28,36,48,.12);overflow:hidden;margin-bottom:30px;}
+.rig-head{display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1.5px dashed var(--line);background:#fbfaf5;flex-wrap:wrap;}
+.rig-no{font-family:var(--mono);font-weight:700;font-size:12px;color:#fff;background:var(--blue);border-radius:6px;padding:3px 9px;}
+.rig-title{font-family:var(--serif);font-weight:900;font-size:18px;}
+.rig-term{font-family:var(--mono);font-size:11px;color:#999;margin-left:auto;}
+.rig-body{padding:20px;}
+.rig-intro{font-size:14px;color:#444;margin-bottom:16px;max-width:760px;}
+.rig-intro b{color:var(--blue);}
+.hint{font-size:12px;color:#999;margin-top:10px;}
+textarea{width:100%;border:1.5px solid var(--ink);border-radius:10px;padding:12px 14px;font-family:var(--sans);font-size:15px;resize:vertical;min-height:70px;background:#fffdf6;}
+select,.btn{font-family:var(--sans);font-size:14px;border:1.5px solid var(--ink);border-radius:8px;padding:7px 12px;background:#fff;cursor:pointer;}
+.btn{font-weight:700;}
+.btn.primary{background:var(--blue);color:#fff;border-color:var(--blue);}
+textarea:focus,select:focus,input:focus,button:focus-visible{outline:3px solid rgba(31,78,140,.3);outline-offset:1px;}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:13px 0;}
+label.small{font-size:13px;color:#555;}
+input[type=range]{width:100%;accent-color:var(--blue);}
+
+/* ===== 首页：组装动画 ===== */
+.assembly{background:var(--blue-deep);border-radius:16px;padding:24px 18px 18px;margin-bottom:14px;}
+.asm-svg{width:100%;height:auto;display:block;}
+.asm-controls{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:14px;flex-wrap:wrap;}
+.asm-btn{border:1.5px solid #9fc1e8;background:transparent;color:#cfe1f5;border-radius:8px;padding:8px 18px;font-weight:700;font-size:14px;cursor:pointer;font-family:var(--sans);}
+.asm-btn.go{background:#ffd591;color:#143257;border-color:#ffd591;}
+.asm-dots{display:flex;gap:7px;}
+.asm-dot{width:10px;height:10px;border-radius:50%;background:#2e5a8f;cursor:pointer;}
+.asm-dot.on{background:#ffd591;}
+/* svg 分组显隐 */
+.asm g{opacity:0;transition:opacity .6s ease;}
+.asm.s1 #g-engine,.asm.s2 #g-engine,.asm.s3 #g-engine,.asm.s4 #g-engine,.asm.s5 #g-engine{opacity:1;}
+.asm.s2 #g-body,.asm.s3 #g-body,.asm.s4 #g-body,.asm.s5 #g-body{opacity:1;}
+.asm.s3 #g-fuel,.asm.s4 #g-fuel,.asm.s5 #g-fuel{opacity:1;}
+.asm.s4 #g-driver,.asm.s5 #g-driver{opacity:1;}
+.asm.s5 #g-fleet{opacity:1;}
+.asm #g-road{opacity:1;}
+/* 运转动画 */
+@keyframes roll{to{transform:rotate(360deg);}}
+@keyframes dashmove{to{stroke-dashoffset:-60;}}
+@keyframes coast{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
+@keyframes coin{0%{transform:translateX(0);opacity:0;}15%{opacity:1;}85%{opacity:1;}100%{transform:translateX(118px);opacity:0;}}
+.asm.s4 .wheel,.asm.s5 .wheel{animation:roll 1.6s linear infinite;transform-box:fill-box;transform-origin:center;}
+.asm.s4 #roadline,.asm.s5 #roadline{animation:dashmove 1.2s linear infinite;}
+.asm.s4 #g-car,.asm.s5 #g-car{animation:coast 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}
+.asm.s3 .coin,.asm.s4 .coin,.asm.s5 .coin{animation:coin 2s linear infinite;transform-box:fill-box;}
+.coin.c2{animation-delay:.66s!important;}
+.coin.c3{animation-delay:1.33s!important;}
+
+.stepcards{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:16px 0 6px;}
+@media(max-width:820px){.stepcards{grid-template-columns:repeat(2,1fr);}}
+.stepcard{border:1.5px solid var(--line);border-radius:11px;padding:12px;background:#fff;font-size:12.5px;color:#888;transition:.25s;cursor:pointer;}
+.stepcard b{display:block;font-size:13.5px;color:#aaa;transition:.25s;}
+.stepcard .sno{font-family:var(--mono);font-size:10px;color:#bbb;}
+.stepcard.on{border-color:var(--orange);background:#fdf1e8;color:#444;box-shadow:3px 3px 0 rgba(224,102,46,.18);}
+.stepcard.on b{color:var(--ink);}
+.stepcard.past{border-color:#cfe0d6;background:#f4faf6;color:#666;}
+.stepcard.past b{color:#3c6e57;}
+.stepcard .eg2{display:block;margin-top:6px;padding-top:5px;border-top:1px dashed #e3ddcb;font-size:11px;color:#b08050;line-height:1.6;}
+.stepcard .eg2 i{font-style:normal;font-family:var(--mono);font-size:9.5px;color:#c9b48f;margin-right:3px;}
+.qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:18px;}
+@media(max-width:760px){.qa-grid{grid-template-columns:1fr;}}
+.qa{border:1.5px solid #dde4ee;background:#f0f3f8;border-radius:12px;padding:14px 16px;font-size:13px;color:#444;}
+.qa .qa-q{font-weight:700;color:var(--blue);margin-bottom:5px;font-size:13.5px;}
+
+/* 首页蓝图目录 */
+.toc{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:8px;}
+@media(max-width:820px){.toc{grid-template-columns:1fr 1fr;}}
+.toc-card{border:1.5px solid var(--ink);border-radius:12px;background:#fff;padding:14px;cursor:pointer;transition:.2s;box-shadow:4px 4px 0 rgba(28,36,48,.1);}
+.toc-card:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 rgba(28,36,48,.16);}
+.toc-card .tl{font-family:var(--mono);font-size:10px;color:var(--blue);}
+.toc-card b{font-family:var(--serif);font-size:16px;display:block;margin:3px 0 2px;}
+.toc-card .tm{font-size:11.5px;color:#888;}
+.toc-apdx{display:flex;gap:12px;margin-top:12px;}
+.toc-apdx .toc-card{flex:1;box-shadow:none;border-style:dashed;border-color:#aaa;}
+
+/* token 切词 */
+#tokenView{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0;min-height:38px;}
+.tk{font-size:14px;padding:3px 8px;border-radius:6px;border:1px solid rgba(0,0,0,.12);animation:pop .25s ease both;}
+@keyframes pop{from{transform:scale(.6);opacity:0;}to{transform:scale(1);opacity:1;}}
+.statline{display:flex;gap:24px;flex-wrap:wrap;margin-top:12px;}
+.stat{font-size:13px;color:#666;}
+.stat b{display:block;font-family:var(--mono);font-size:20px;color:var(--ink);}
+.stat b.money{color:var(--teal);}
+
+/* 水箱 */
+.tank-wrap{display:flex;gap:26px;align-items:flex-end;flex-wrap:wrap;}
+.tank{width:120px;height:210px;border:2.5px solid var(--ink);border-radius:10px 10px 14px 14px;position:relative;overflow:hidden;background:#fffdf6;flex-shrink:0;}
+.tank-fill{position:absolute;bottom:0;left:0;right:0;height:0%;background:linear-gradient(180deg,#5ba3e8,#1f4e8c);transition:height .4s;}
+.tank-overflow{position:absolute;top:0;left:0;right:0;height:0;background:repeating-linear-gradient(45deg,#e0662e33,#e0662e33 6px,#e0662e11 6px,#e0662e11 12px);border-bottom:2px dashed var(--orange);transition:height .4s;}
+.tank-label{position:absolute;left:0;right:0;top:46%;text-align:center;font-family:var(--mono);font-size:12px;z-index:2;}
+.tank-info{flex:1;min-width:230px;}
+.forget{font-size:13px;margin-top:10px;padding:10px 12px;border-radius:8px;background:#fdf1e8;border:1px dashed var(--orange);color:#8a4116;display:none;}
+
+/* 思考模式 */
+.switch{position:relative;width:60px;height:31px;flex-shrink:0;}
+.switch input{opacity:0;width:0;height:0;}
+.slider-ui{position:absolute;inset:0;background:#ccc;border-radius:32px;cursor:pointer;transition:.25s;}
+.slider-ui::before{content:"";position:absolute;width:23px;height:23px;border-radius:50%;left:4px;top:4px;background:#fff;transition:.25s;box-shadow:0 1px 3px rgba(0,0,0,.3);}
+.switch input:checked + .slider-ui{background:var(--blue);}
+.switch input:checked + .slider-ui::before{transform:translateX(29px);}
+.think-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:16px;}
+@media(max-width:760px){.think-grid{grid-template-columns:1fr;}}
+.bubble{border:1.5px solid var(--line);border-radius:12px;padding:15px;background:#fffdf6;font-size:14px;}
+.bubble h4{font-size:12px;font-family:var(--mono);color:var(--blue);margin-bottom:7px;}
+.cot{background:#eef3fa;border:1px dashed var(--blue);border-radius:8px;padding:10px 12px;font-size:12.5px;color:#3a567c;margin-bottom:10px;display:none;}
+.bar-row{display:flex;align-items:center;gap:10px;font-size:12.5px;margin-top:8px;}
+.bar-track{flex:1;height:10px;background:#eee;border-radius:6px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:6px;transition:width .4s;}
+
+/* 能力溯源台 */
+.cap-pills,.task-pills,.dec-pills{display:flex;gap:9px;flex-wrap:wrap;margin:13px 0;}
+.pill{border:1.5px solid var(--ink);border-radius:24px;padding:7px 15px;font-size:13.5px;background:#fff;cursor:pointer;font-weight:500;transition:.2s;font-family:var(--sans);}
+.pill.active{background:var(--ink);color:#fff;}
+.verdict{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;}
+.v-badge{font-size:13px;font-weight:700;border-radius:9px;padding:9px 16px;border:2px solid;}
+.v-badge.native{color:var(--teal);border-color:var(--teal);background:#e9f6f2;}
+.v-badge.tool{color:var(--orange);border-color:var(--orange);background:#fdf1e8;}
+.v-badge.both{color:var(--blue);border-color:var(--blue);background:#eef3fa;}
+.v-badge.dim{opacity:.22;border-style:dashed;font-weight:400;}
+.pipeline{border-left:4px solid var(--blue);background:#f4f7fc;border-radius:0 10px 10px 0;padding:13px 15px;font-size:13.5px;margin-top:13px;}
+.pipeline .pl-t{font-family:var(--mono);font-size:11px;color:var(--blue);margin-bottom:5px;font-weight:700;}
+
+/* 产品解剖 chips */
+.anatomy{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0;}
+.an-chip{font-size:12.5px;border:1.5px solid var(--line);border-radius:9px;padding:7px 12px;background:#fbfaf5;}
+.an-chip b{color:var(--blue);}
+
+/* 决策器 */
+.dec-panel{border:1.5px dashed var(--gold);background:#fdf8ec;border-radius:12px;padding:17px;font-size:14px;}
+.dec-panel h4{font-size:14px;color:#8a6418;margin-bottom:6px;}
+.dec-panel .eg{font-size:12.5px;color:#777;margin-top:7px;}
+
+/* agent 流水线 */
+.steps{display:flex;flex-direction:column;gap:8px;margin:16px 0;}
+.step{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;border:1.5px solid var(--line);background:#fbfaf5;font-size:14px;opacity:.38;transition:.3s;}
+.step.on{opacity:1;border-color:var(--blue);background:#eef3fa;}
+.step.err.on{border-color:var(--orange);background:#fdf1e8;}
+.step.done-mark.on{border-color:var(--teal);background:#e9f6f2;}
+.step .ico{font-size:18px;width:26px;text-align:center;}
+.step .who{font-family:var(--mono);font-size:11px;color:#999;margin-left:auto;white-space:nowrap;}
+.meter-label{font-size:12px;color:#666;display:flex;justify-content:space-between;font-family:var(--mono);}
+.meter{height:14px;border:1.5px solid var(--ink);border-radius:8px;overflow:hidden;background:#fff;}
+.meter-fill{height:100%;width:0%;background:linear-gradient(90deg,#2a8f7c,#c8922a,#e0662e);transition:width .5s;}
+.vs-chat{font-size:13px;color:#666;margin-top:10px;}
+.vs-chat b{color:var(--orange);font-family:var(--mono);}
+
+/* 五阶段搭建 */
+.build-bar{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0;}
+.bstage{flex:1;min-width:120px;border:1.5px solid var(--line);border-radius:10px;padding:10px;font-size:12.5px;text-align:center;cursor:pointer;background:#fff;transition:.25s;color:#999;}
+.bstage .bi{font-size:21px;display:block;filter:grayscale(1);opacity:.45;transition:.25s;}
+.bstage.got{border-color:var(--teal);background:#e9f6f2;color:var(--ink);}
+.bstage.got .bi{filter:none;opacity:1;}
+.bstage.cur{border-color:var(--blue);box-shadow:0 0 0 3px rgba(31,78,140,.18);}
+.build-panel{border:1.5px solid var(--line);border-radius:12px;padding:16px;background:#fffdf6;font-size:13.5px;}
+.build-panel .bp-q{font-family:var(--mono);font-size:11px;color:#999;margin-bottom:4px;}
+.build-panel .bp-a{margin-top:9px;padding:11px 13px;border-radius:9px;background:#fff;border:1.5px solid var(--line);}
+
+/* tool/skill */
+.tri-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:14px 0;}
+@media(max-width:760px){.tri-grid{grid-template-columns:1fr;}}
+.tri{border:1.5px solid var(--line);border-radius:12px;padding:15px;background:#fff;font-size:13px;}
+.tri h4{font-size:15px;margin-bottom:2px;}
+.tri .who2{font-size:11.5px;color:#999;margin-bottom:8px;}
+.cmp-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:14px;}
+.cmp-table th,.cmp-table td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top;}
+.cmp-table th{background:#fbfaf5;font-family:var(--mono);font-size:11.5px;}
+.cmp-table td:first-child{font-weight:700;white-space:nowrap;background:#fbfaf5;}
+.skill-shelf{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0;}
+@media(max-width:760px){.skill-shelf{grid-template-columns:repeat(2,1fr);}}
+.skill-card{border:1.5px dashed var(--line);border-radius:10px;padding:11px;text-align:center;font-size:12.5px;background:#fbfaf5;transition:.25s;color:#999;}
+.skill-card .si{font-size:22px;display:block;margin-bottom:3px;filter:grayscale(1);opacity:.5;transition:.25s;}
+.skill-card.lit{border:1.5px solid var(--gold);background:#fdf8ec;color:var(--ink);box-shadow:0 0 0 3px rgba(200,146,42,.15);}
+.skill-card.lit .si{filter:none;opacity:1;}
+.skill-detail{border-left:4px solid var(--gold);background:#fdf8ec;border-radius:0 10px 10px 0;padding:13px 15px;font-size:13px;margin-top:5px;}
+.skill-detail .sd-title{font-weight:700;font-family:var(--mono);font-size:11.5px;color:#8a6418;margin-bottom:5px;}
+.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:13px;}
+@media(max-width:700px){.ba-grid{grid-template-columns:1fr;}}
+.ba{border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;font-size:13px;background:#fff;}
+.ba h5{font-size:12px;font-family:var(--mono);margin-bottom:5px;}
+.ba.bad h5{color:#b04a23;}.ba.good h5{color:var(--teal);}
+.mcp-note{margin-top:15px;font-size:13px;color:#555;background:#f0f3f8;border-radius:10px;padding:12px 14px;border:1px solid #dde4ee;}
+
+/* 光谱 */
+.spectrum{display:flex;margin:15px 0 13px;border:1.5px solid var(--ink);border-radius:12px;overflow:hidden;}
+.spec-btn{flex:1;padding:12px 8px;text-align:center;background:#fff;border:none;cursor:pointer;font-family:var(--sans);font-size:13.5px;font-weight:700;border-right:1.5px solid var(--line);transition:.2s;}
+.spec-btn:last-child{border-right:none;}
+.spec-btn.active{background:var(--blue);color:#fff;}
+.spec-panel{border:1.5px dashed var(--line);border-radius:12px;padding:16px;background:#fffdf6;font-size:14px;}
+.spec-panel .ex{font-size:12.5px;color:#777;margin-top:8px;}
+
+/* 付费 */
+.pay-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:16px;}
+@media(max-width:760px){.pay-grid{grid-template-columns:1fr;}}
+.pay-card{border:1.5px solid var(--line);border-radius:12px;padding:15px;background:#fff;transition:.25s;}
+.pay-card.best{border:2px solid var(--teal);background:#e9f6f2;box-shadow:4px 4px 0 rgba(42,143,124,.18);}
+.pay-card h4{font-size:15px;margin-bottom:2px;}
+.pay-card .who2{font-size:11.5px;color:#999;margin-bottom:9px;}
+.pay-card .cost{font-family:var(--mono);font-size:21px;font-weight:700;}
+.pay-card .cost small{font-size:12px;color:#888;font-weight:400;}
+.pay-card .note2{font-size:12px;color:#666;margin-top:8px;line-height:1.6;}
+.best-tag{display:none;font-size:11px;font-weight:700;color:#fff;background:var(--teal);border-radius:5px;padding:1px 7px;margin-left:6px;vertical-align:2px;}
+.pay-card.best .best-tag{display:inline-block;}
+.usage-readout{font-family:var(--mono);font-size:13px;color:var(--blue);}
+.adv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:10px;}
+@media(max-width:760px){.adv-grid{grid-template-columns:1fr;}}
+.adv{border:1.5px dashed #b9a76d;border-radius:12px;padding:14px;background:#fdf8ec;font-size:13px;}
+.adv h4{font-size:14px;color:#8a6418;}
+.adv .tagx{font-family:var(--mono);font-size:10px;color:#fff;background:#b9a76d;border-radius:4px;padding:1px 6px;vertical-align:2px;margin-left:5px;}
+
+/* 厂商 */
+.tabs{display:flex;gap:10px;margin-bottom:18px;}
+.tab{border:1.5px solid var(--ink);border-radius:8px;padding:8px 20px;background:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:var(--sans);}
+.tab.active{background:var(--ink);color:#fff;}
+.factory{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;}
+@media(max-width:820px){.factory{grid-template-columns:1fr;}}
+.fc{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:17px;}
+.fc-head{display:flex;align-items:baseline;gap:10px;margin-bottom:9px;flex-wrap:wrap;}
+.fc-name{font-family:var(--serif);font-weight:900;font-size:17px;}
+.fc-pos{font-size:11.5px;color:#999;}
+.fc-row{font-size:13px;margin-bottom:6px;display:flex;gap:8px;}
+.fc-k{flex-shrink:0;font-family:var(--mono);font-size:10.5px;color:#fff;border-radius:5px;padding:2px 7px;height:fit-content;margin-top:2px;}
+.fc-k.m{background:var(--blue);}.fc-k.p{background:var(--teal);}.fc-k.a{background:var(--orange);}.fc-k.d{background:#7a6db0;}
+.gauge{display:flex;gap:4px;margin-top:9px;align-items:center;font-size:11.5px;color:#888;}
+.dotg{width:12px;height:12px;border-radius:3px;background:#e7e2d4;}
+.dotg.on{background:var(--orange);}
+
+/* 术语表 */
+.glossary{display:grid;grid-template-columns:1fr 1fr;gap:0 34px;font-size:13.5px;}
+@media(max-width:700px){.glossary{grid-template-columns:1fr;}}
+.g-item{display:flex;gap:12px;padding:9px 0;border-bottom:1px dashed var(--line);}
+.g-term{font-family:var(--mono);font-weight:700;font-size:12.5px;color:var(--blue);flex-shrink:0;width:128px;}
+.g-adv .g-term{color:#8a6418;}
+
+footer{border-top:3px double var(--ink);padding:22px 0 46px;font-size:11.5px;color:#888;font-family:var(--mono);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:30px;}
+</style>
+</head>
+<body>
+
+<nav id="topnav">
+  <div id="progress" style="width: 14.2857%;"></div>
+  <div class="nav-inner">
+    <span class="nav-brand">AI 装配手册</span>
+    <button class="nv" data-pg="0"><span class="n">00</span>总装线</button>
+    <button class="nv active" data-pg="1"><span class="n">01</span>模型层·发动机</button>
+    <button class="nv" data-pg="2"><span class="n">02</span>能力层·配置</button>
+    <button class="nv" data-pg="3"><span class="n">03</span>产品层·整车</button>
+    <button class="nv" data-pg="4"><span class="n">04</span>Agent层·司机</button>
+    <button class="nv" data-pg="5"><span class="n">05</span>开发者层·车队</button>
+    <button class="nv" data-pg="6"><span class="n">A</span>公司车间</button>
+    <button class="nv" data-pg="7"><span class="n">B</span>术语表</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- ========================================================= 第0页 总装线 -->
+<section class="page" id="pg0">
+  <div class="pg-head">
+    <div class="pg-tag">HOME / 总装线</div>
+    <h1>一辆车是怎么跑起来的</h1>
+    <p class="pg-desc">AI 产品不是一个东西，而是层层装配起来的系统。点「下一步」，30 秒看完整条总装线——后面五章，每章拆一层。</p>
+  </div>
+
+  <div class="assembly">
+    <svg class="asm-svg asm s5" id="asmSvg" viewBox="0 0 900 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="整车组装演示动画">
+      <defs>
+        <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#ffd591"></path></marker>
+      </defs>
+      <style>
+        .st{stroke:#9fc1e8;stroke-width:2.5;fill:none;}
+        .stf{fill:#1d4373;stroke:#9fc1e8;stroke-width:2.5;}
+        .lbl{fill:#cfe1f5;font:400 13px 'Noto Sans SC',sans-serif;}
+        .lblb{fill:#ffd591;font:700 13px 'Noto Sans SC',sans-serif;}
+        .mono2{fill:#7fa6d8;font:700 10px 'JetBrains Mono',monospace;letter-spacing:1px;}
+      </style>
+      <!-- 路面 -->
+      <g id="g-road">
+        <line x1="20" y1="282" x2="880" y2="282" stroke="#3c6498" stroke-width="3"></line>
+        <line id="roadline" x1="20" y1="294" x2="880" y2="294" stroke="#3c6498" stroke-width="2" stroke-dasharray="18 22"></line>
+      </g>
+      <!-- 整车（车身+发动机+司机 同组，便于行驶浮动） -->
+      <g id="g-car" style="opacity:1;">
+        <!-- 车身 -->
+        <g id="g-body">
+          <path class="stf" d="M310 252 L310 215 Q310 200 326 200 L386 200 L412 158 Q418 148 432 148 L520 148 Q534 148 540 158 L566 200 L612 200 Q628 200 628 215 L628 252 Q628 260 618 260 L320 260 Q310 260 310 252 Z"></path>
+          <rect class="st" x="438" y="160" width="86" height="38" rx="7"></rect>
+          <circle class="wheel" cx="380" cy="262" r="22" fill="#143257" stroke="#9fc1e8" stroke-width="2.5"></circle>
+          <circle class="wheel" cx="560" cy="262" r="22" fill="#143257" stroke="#9fc1e8" stroke-width="2.5"></circle>
+          <path class="st wheel" d="M380 248 v28 M366 262 h28" stroke-width="2"></path>
+          <path class="st wheel" d="M560 248 v28 M546 262 h28" stroke-width="2"></path>
+          <text class="lblb" x="318" y="190">产品（整车）</text>
+          <text class="mono2" x="318" y="176">LAYER 3</text>
+        </g>
+        <!-- 发动机 -->
+        <g id="g-engine">
+          <rect class="stf" x="322" y="214" width="74" height="38" rx="6"></rect>
+          <circle class="st" cx="344" cy="233" r="10"></circle>
+          <path class="st" d="M344 223 v20 M334 233 h20" stroke-width="2"></path>
+          <rect class="st" x="364" y="222" width="24" height="22" rx="3"></rect>
+          <text class="lblb" x="322" y="208">模型（发动机）</text>
+          <text class="mono2" x="322" y="194" id="engTag">LAYER 1</text>
+        </g>
+        <!-- 司机 -->
+        <g id="g-driver">
+          <circle class="stf" cx="468" cy="172" r="9"></circle>
+          <path class="st" d="M455 198 Q455 184 468 184 Q481 184 481 198"></path>
+          <text class="lblb" x="548" y="140">Agent（司机）</text>
+          <text class="mono2" x="548" y="126">LAYER 4</text>
+          <line class="st" x1="544" y1="144" x2="492" y2="166" stroke-dasharray="4 4" stroke-width="1.5"></line>
+        </g>
+      </g>
+      <!-- 油（token） -->
+      <g id="g-fuel">
+        <rect class="stf" x="120" y="200" width="52" height="60" rx="7"></rect>
+        <rect class="st" x="132" y="212" width="28" height="16" rx="3"></rect>
+        <text class="lblb" x="104" y="190">Token（油）</text>
+        <text class="mono2" x="104" y="176">LAYER 2 · 燃料与配置</text>
+        <path class="st" d="M172 230 H300" stroke-dasharray="6 6" stroke-width="1.8"></path>
+        <circle class="coin" cx="186" cy="230" r="7" fill="#ffd591"></circle>
+        <circle class="coin c2" cx="186" cy="230" r="7" fill="#ffd591"></circle>
+        <circle class="coin c3" cx="186" cy="230" r="7" fill="#ffd591"></circle>
+      </g>
+      <!-- 车队（开发者层） -->
+      <g id="g-fleet">
+        <rect class="stf" x="724" y="64" width="120" height="56" rx="8"></rect>
+        <text class="lblb" x="736" y="88">你的系统</text>
+        <text class="lbl" x="736" y="106" font-size="11">（接 API 自己组车队）</text>
+        <text class="mono2" x="724" y="54">LAYER 5</text>
+        <path d="M784 120 V160" class="st" marker-end="url(#arr2)" stroke-dasharray="5 5"></path>
+        <g transform="translate(700,176) scale(.46)">
+          <path class="stf" d="M10 160 L10 120 Q10 104 28 104 L96 104 L124 60 Q130 50 144 50 L232 50 Q246 50 252 60 L280 104 L324 104 Q342 104 342 120 L342 160 Q342 170 330 170 L22 170 Q10 170 10 160 Z"></path>
+          <circle cx="86" cy="172" r="24" fill="#143257" stroke="#9fc1e8" stroke-width="5"></circle>
+          <circle cx="272" cy="172" r="24" fill="#143257" stroke="#9fc1e8" stroke-width="5"></circle>
+        </g>
+        <g transform="translate(796,200) scale(.34)">
+          <path class="stf" d="M10 160 L10 120 Q10 104 28 104 L96 104 L124 60 Q130 50 144 50 L232 50 Q246 50 252 60 L280 104 L324 104 Q342 104 342 120 L342 160 Q342 170 330 170 L22 170 Q10 170 10 160 Z"></path>
+          <circle cx="86" cy="172" r="24" fill="#143257" stroke="#9fc1e8" stroke-width="5"></circle>
+          <circle cx="272" cy="172" r="24" fill="#143257" stroke="#9fc1e8" stroke-width="5"></circle>
+        </g>
+      </g>
+    </svg>
+    <div class="asm-controls">
+      <button class="asm-btn" id="asmPrev">← 上一步</button>
+      <div class="asm-dots" id="asmDots"><div class="asm-dot on"></div><div class="asm-dot on"></div><div class="asm-dot on"></div><div class="asm-dot on"></div><div class="asm-dot on"></div></div>
+      <button class="asm-btn go" id="asmNext">✓ 总装完成</button>
+    </div>
+  </div>
+
+  <div class="stepcards" id="stepCards">
+    <div class="stepcard past" data-s="1"><span class="sno">STEP 1 · 模型层</span><b>🔩 先造发动机</b>大模型：会读、会写、会推理的"大脑"。但它只是发动机，不是车。<span class="eg2"><i>例</i>GPT-5.5、DeepSeek-V4、Qwen3.7-Max、Claude Opus、GLM-5.1——这些都是发动机的名字</span></div>
+    <div class="stepcard past" data-s="2"><span class="sno">STEP 2 · 产品层</span><b>🚗 装进整车</b>产品给发动机配上车身：界面、账号、工具。<span class="eg2"><i>例</i>ChatGPT（装的是 GPT-5.5）、豆包（装的是 Seed 2.0）、Kimi、Claude.ai——这些是车的名字</span></div>
+    <div class="stepcard past" data-s="3"><span class="sno">STEP 3 · 燃料</span><b>⛽ 加上油</b>Token 是油：读进来的、说出去的每个"字块"都烧油计费。<span class="eg2"><i>例</i>会员 ¥98/月 = 包油费的包月租车；API ¥1~36/百万token = 自己按升加油</span></div>
+    <div class="stepcard past" data-s="4"><span class="sno">STEP 4 · Agent层</span><b>🧑‍✈️ 请上司机</b>Agent 让车自己跑：规划路线、开车送货、出错自己调头。<span class="eg2"><i>例</i>Claude Code、ChatGPT Agent 模式、扣子、OpenClaw（龙虾）。没请司机时，你自己就是司机</span></div>
+    <div class="stepcard on" data-s="5"><span class="sno">STEP 5 · 开发者层</span><b>🏭 组建车队</b>企业通过 API 把发动机买回去，装进自己的系统组车队。<span class="eg2"><i>例</i>各种 App 里的"AI 助手"，背后多是接了 DeepSeek / Qwen / GPT 的 API</span></div>
+  </div>
+  <p class="hint" id="asmCaption" aria-live="polite">第 5 步：企业不满足于租车，通过 API 把发动机买回去组车队——你用的很多 App 里的"AI 助手"，背后就是这么接进去的。</p>
+
+  <div class="qa-grid">
+    <div class="qa">
+      <div class="qa-q">❓ 我在产品里买会员，算不算"买油"？</div>
+      算。会员 = <b>包油费的包月租车</b>：你每次对话背后照样在烧 token，只是油钱由平台垫付、打包进了月费。所以会员都有"每小时限多少条""高峰限速"——那就是变相的油量上限。免费版则是平台补贴油费请你试驾。只有走 API，才是自己到加油站按升付油钱。
+    </div>
+    <div class="qa">
+      <div class="qa-q">❓ 没请司机（Agent），车怎么也能开？</div>
+      因为<b>你自己就是司机</b>。普通聊天 = 手动挡：你说一步、它动一步，查资料、做判断、把它给的代码存成文件，这些"驾驶动作"都是你在做。Agent = 把方向盘交给 AI 代驾，你只报目的地。中间还有"辅助驾驶"档（产品自带工具）——详见第四章的光谱仪。
+    </div>
+  </div>
+
+  <div class="pg-head" style="padding-top:30px;">
+    <div class="pg-tag">CONTENTS / 蓝图目录</div>
+    <h1 style="font-size:24px;">五层结构，点哪层学哪层</h1>
+  </div>
+  <div class="toc">
+    <div class="toc-card" data-go="1"><span class="tl">CH.01</span><b>模型层</b><span class="tm">发动机 · token / 上下文 / 思考模式</span></div>
+    <div class="toc-card" data-go="2"><span class="tl">CH.02</span><b>能力层</b><span class="tm">性能配置 · 自带能力 vs 工具外挂</span></div>
+    <div class="toc-card" data-go="3"><span class="tl">CH.03</span><b>产品层</b><span class="tm">整车 · 入口怎么选</span></div>
+    <div class="toc-card" data-go="4"><span class="tl">CH.04</span><b>Agent 层</b><span class="tm">司机 · Tool / Skill / 五阶段搭建</span></div>
+    <div class="toc-card" data-go="5"><span class="tl">CH.05</span><b>开发者层</b><span class="tm">车队 · 会员 / API / Coding Plan</span></div>
+  </div>
+  <div class="toc-apdx">
+    <div class="toc-card" data-go="6"><span class="tl">APPENDIX A</span><b>公司车间巡礼</b><span class="tm">国内外 12 家按五层拆解</span></div>
+    <div class="toc-card" data-go="7"><span class="tl">APPENDIX B</span><b>术语速查表</b><span class="tm">按层归位的词典</span></div>
+  </div>
+  <div class="pager"><button disabled="">　</button><button class="next" data-go="1">开始第一章 →<small>CH.01 模型层 · 发动机</small></button></div>
+</section>
+
+<!-- ========================================================= 第1页 模型层 -->
+<section class="page show" id="pg1">
+  <div class="pg-head">
+    <div class="pg-tag">CHAPTER 01 / 模型层</div>
+    <h1>发动机：大模型本体</h1>
+    <span class="metaline">🔩 比喻：模型 = 发动机。它决定动力上限，但它自己跑不上路。</span>
+    <p class="pg-desc">大模型是用海量数据训练出来的"语言大脑"：输入内容 → 计算 → 输出内容。本章三个装置，拆它的三个关键参数：吃什么油（token）、油箱多大（上下文）、有没有高性能模式（思考模式）。</p>
+  </div>
+
+  <div class="rig">
+    <div class="rig-head"><span class="rig-no">装置 01</span><span class="rig-title">Token 切词台</span><span class="rig-term">TOKEN / 计量单位</span></div>
+    <div class="rig-body">
+      <p class="rig-intro">模型不按"字"读文章，而是切成一块块 <b>token</b>（约 1 token ≈ 1.5~2 个汉字）。输入和输出都按 token 计费——这是 AI 世界的水表电表。输入任意文字试试：</p>
+      <textarea id="tkInput">帮我分析一下MacBook Air在京东618期间的价格竞争力，并给出三条促销建议。</textarea>
+      <div class="row">
+        <label class="small">按这家的价格估算：</label>
+        <select id="tkModel">
+          <option value="1,2,DeepSeek V4-Flash">DeepSeek V4-Flash（¥1 / ¥2）</option>
+          <option value="3,6,DeepSeek V4-Pro">DeepSeek V4-Pro（¥3 / ¥6）</option>
+          <option value="6.5,27,Kimi K2.6">Kimi K2.6（¥6.5 / ¥27）</option>
+          <option value="12,36,Qwen3.7-Max">Qwen3.7-Max（¥12 / ¥36）</option>
+          <option value="21.6,108,Claude Sonnet 4.6">Claude Sonnet 4.6（≈¥21.6 / ¥108）</option>
+          <option value="36,216,GPT-5.5">GPT-5.5（≈¥36 / ¥216）</option>
+        </select>
+      </div>
+      <div id="tokenView" aria-live="polite"><span class="tk" style="background: rgb(219, 234, 254); animation-delay: 0ms;">帮我</span><span class="tk" style="background: rgb(220, 252, 231); animation-delay: 12ms;">分</span><span class="tk" style="background: rgb(254, 243, 199); animation-delay: 24ms;">析一</span><span class="tk" style="background: rgb(253, 226, 226); animation-delay: 36ms;">下</span><span class="tk" style="background: rgb(237, 233, 254); animation-delay: 48ms;">MacB</span><span class="tk" style="background: rgb(207, 250, 254); animation-delay: 60ms;">ook</span><span class="tk" style="background: rgb(252, 231, 243); animation-delay: 72ms;">Air</span><span class="tk" style="background: rgb(231, 245, 228); animation-delay: 84ms;">在京</span><span class="tk" style="background: rgb(219, 234, 254); animation-delay: 96ms;">东</span><span class="tk" style="background: rgb(220, 252, 231); animation-delay: 108ms;">618</span><span class="tk" style="background: rgb(254, 243, 199); animation-delay: 120ms;">期间</span><span class="tk" style="background: rgb(253, 226, 226); animation-delay: 132ms;">的</span><span class="tk" style="background: rgb(237, 233, 254); animation-delay: 144ms;">价格</span><span class="tk" style="background: rgb(207, 250, 254); animation-delay: 156ms;">竞</span><span class="tk" style="background: rgb(252, 231, 243); animation-delay: 168ms;">争力</span><span class="tk" style="background: rgb(231, 245, 228); animation-delay: 180ms;">，</span><span class="tk" style="background: rgb(219, 234, 254); animation-delay: 192ms;">并给</span><span class="tk" style="background: rgb(220, 252, 231); animation-delay: 204ms;">出</span><span class="tk" style="background: rgb(254, 243, 199); animation-delay: 216ms;">三条</span><span class="tk" style="background: rgb(253, 226, 226); animation-delay: 228ms;">促</span><span class="tk" style="background: rgb(237, 233, 254); animation-delay: 240ms;">销建</span><span class="tk" style="background: rgb(207, 250, 254); animation-delay: 252ms;">议</span><span class="tk" style="background: rgb(252, 231, 243); animation-delay: 264ms;">。</span></div>
+      <div class="statline">
+        <div class="stat">切出 token 数<b id="tkCount">23</b></div>
+        <div class="stat">这段话作为输入<b class="money" id="tkCostIn">¥0.00002</b></div>
+        <div class="stat">若回复同样长度<b class="money" id="tkCostOut">¥0.00005</b></div>
+        <div class="stat">这样的问答 1 万次<b class="money" id="tkCost10k">¥0.690</b></div>
+      </div>
+      <p class="hint">※ 切分为演示用近似（每家分词器不同）。输出单价通常是输入的 3~5 倍——生成比阅读更耗算力。价格为 2026 年 6 月核对的官网价。</p>
+    </div>
+  </div>
+
+  <div class="rig">
+    <div class="rig-head"><span class="rig-no">装置 02</span><span class="rig-title">上下文水箱</span><span class="rig-term">CONTEXT WINDOW / 工作记忆</span></div>
+    <div class="rig-body">
+      <p class="rig-intro"><b>上下文窗口</b>是模型一次能"看见"的内容上限，像一个水箱。聊得越久水位越高，<b>装满之后最早的对话被挤出去遗忘</b>。拖动滑块模拟：</p>
+      <div class="tank-wrap">
+        <div class="tank"><div class="tank-overflow" id="tankOver" style="height: 0px;"></div><div class="tank-fill" id="tankFill" style="height: 3.125%;"></div><div class="tank-label" id="tankPct">3%</div></div>
+        <div class="tank-info">
+          <div class="row">
+            <label class="small">水箱容量：</label>
+            <select id="ctxModel">
+              <option value="32000">32K（豆包1.6 经济档）</option>
+              <option value="128000">128K（上一代主流）</option>
+              <option value="256000" selected="">256K（Kimi K2.6 / Seed 2.0）</option>
+              <option value="1000000">1M（DeepSeek V4 / Qwen3.7-Max）</option>
+            </select>
+          </div>
+          <label class="small">对话轮数：<b id="turnNum" style="font-family:var(--mono)">10</b> 轮（每轮约 800 token）</label>
+          <input type="range" id="ctxSlider" min="1" max="600" value="10" aria-label="对话轮数">
+          <div class="forget" id="forgetMsg" style="display: none;"></div>
+          <p class="hint" style="margin-top:11px;">一份 30 万字的报告 ≈ 18 万 token：32K 的模型装不下，1M 的可以整本吞下——这就是"长上下文"的意义。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rig">
+    <div class="rig-head"><span class="rig-no">装置 03</span><span class="rig-title">思考模式开关</span><span class="rig-term">THINKING / REASONING</span></div>
+    <div class="rig-body">
+      <p class="rig-intro">很多模型有两种回答方式：直接答，或先在"草稿纸"上推理一遍再答（<b>思考模式 / 推理模型</b>）。草稿你看不见，但<b>每个字都算 token、都收钱</b>。拨动开关对比：</p>
+      <div class="row">
+        <label class="switch"><input type="checkbox" id="thinkToggle" aria-label="开启思考模式"><span class="slider-ui"></span></label>
+        <span style="font-weight:700;" id="thinkLabel">思考模式：关</span>
+      </div>
+      <div class="think-grid">
+        <div class="bubble"><h4>QUESTION</h4>38 个仓库要分 1200 台 MacBook，按近 30 天销量加权，但 5 个仓库的库容只剩 10 台，怎么分？</div>
+        <div class="bubble"><h4>ANSWER</h4>
+          <div class="cot" id="cotBlock">🧠 隐藏思考草稿（约 2,400 token，计费但默认不展示）：先算总销量权重…→ 5 个受限仓先按上限锁定 → 剩余 1150 台在 33 仓重新归一化 → 复检是否新超容 → 迭代两轮收敛…</div>
+          <div id="answerText">先按销量比例直接分配即可，受限仓库分到多少就发多少。<span style="color:#b04a23;font-size:12px;">（快，但漏了"超容部分要回流重分"这一步）</span></div>
+          <div class="bar-row"><span style="width:62px;">耗时</span><div class="bar-track"><div class="bar-fill" id="barTime" style="width:18%;background:#5ba3e8;"></div></div><span id="timeVal" style="font-family:var(--mono)">~2s</span></div>
+          <div class="bar-row"><span style="width:62px;">token 费</span><div class="bar-track"><div class="bar-fill" id="barCost" style="width:12%;background:#2a8f7c;"></div></div><span id="costVal" style="font-family:var(--mono)">×1</span></div>
+        </div>
+      </div>
+      <p class="hint">经验法则：简单问答关思考（快且便宜），数学 / 多约束规划 / 复杂代码开思考（贵几倍但不容易错）。</p>
+    </div>
+  </div>
+
+  <p class="metaline" style="display:block;">⚠️ 本章关键边界：模型本身只是"输入内容 → 输出内容"。<b>能不能操作文件、联网、生成网页，取决于上面几层给没给它工具</b>——这正是下一章的内容。</p>
+  <div class="pager">
+    <button data-go="0">← 返回总装线<small>HOME</small></button>
+    <button class="next" data-go="2">下一章：能力层 →<small>CH.02 自带能力 vs 工具外挂</small></button>
+  </div>
+</section>
+
+<!-- ========================================================= 第2页 能力层 -->
+<section class="page" id="pg2">
+  <div class="pg-head">
+    <div class="pg-tag">CHAPTER 02 / 能力层</div>
+    <h1>性能配置：哪些是自带的，哪些是外挂的</h1>
+    <span class="metaline">⚙️ 比喻：发动机自带的性能 vs 后装的设备。最容易混淆的一层。</span>
+    <p class="pg-desc">"AI 能生成图片 / 能联网 / 能读 PDF"——这些表现有的来自模型本身，有的来自产品外挂的工具。分不清这一点，就会误以为"DeepSeek 不会做网页"。</p>
+  </div>
+
+  <div class="rig">
+    <div class="rig-head"><span class="rig-no">装置 04</span><span class="rig-title">能力溯源台</span><span class="rig-term">NATIVE vs TOOL-AUGMENTED</span></div>
+    <div class="rig-body">
+      <p class="rig-intro">点一个你见过的"AI 能力"，看它到底来自谁、背后大概发生了什么：</p>
+      <div class="cap-pills" id="capPills"><button class="pill active">写文章 / 总结翻译</button><button class="pill">写代码（贴在聊天框里）</button><button class="pill">数学推理 / 复杂规划</button><button class="pill">看懂图片</button><button class="pill">回答今天的新闻 / 价格</button><button class="pill">读 PDF / 生成 Word、Excel</button><button class="pill">做出能打开的网页</button><button class="pill">生成图片</button><button class="pill">查订单 / 改工单 / 发消息</button></div>
+      <div class="verdict">
+        <span class="v-badge native" id="vbN">🧠 模型自带</span>
+        <span class="v-badge tool dim" id="vbT">🔧 工具外挂</span>
+        <span class="v-badge both dim" id="vbB">🌓 两种都有</span>
+      </div>
+      <div class="pipeline" id="capPipe"><div class="pl-t">背后大概发生了什么</div>用户输入 → 模型直接生成文字 → 输出。纯发动机性能，任何入口都有。</div>
+      <p class="hint">所以「DeepSeek 网页版只能聊天」不代表模型不会写网页——是这个入口没给它配"创建文件、运行代码、预览网页"的工具链。换个带工具的入口（比如把它的 API 接进编程工具），同一个模型立刻能交付文件。</p>
+    </div>
+  </div>
+
+  <div class="pager">
+    <button data-go="1">← 上一章<small>CH.01 模型层</small></button>
+    <button class="next" data-go="3">下一章：产品层 →<small>CH.03 入口怎么选</small></button>
+  </div>
+</section>
+
+<!-- ========================================================= 第3页 产品层 -->
+<section class="page" id="pg3">
+  <div class="pg-head">
+    <div class="pg-tag">CHAPTER 03 / 产品层</div>
+    <h1>整车：你实际打开的那个入口</h1>
+    <span class="metaline">🚗 比喻：产品 = 整车。同一颗发动机，配置单不同，体验天差地别。</span>
+    <p class="pg-desc">产品 = 把模型、界面、工具、账号、额度、安全策略组装在一起。拆开任何一个 AI 产品，配置单都是这六项：</p>
+  </div>
+
+  <div class="anatomy">
+    <span class="an-chip"><b>模型</b> 底层能力（发动机）</span>
+    <span class="an-chip"><b>界面</b> 聊天框、文件区（驾驶舱）</span>
+    <span class="an-chip"><b>工具</b> 搜索、代码、图片（车载设备）</span>
+    <span class="an-chip"><b>账号</b> 历史、记忆、权限（行驶证）</span>
+    <span class="an-chip"><b>额度</b> 会员、频率上限（限速器）</span>
+    <span class="an-chip"><b>安全策略</b> 能做 / 不能做（交规）</span>
+  </div>
+
+  <div class="rig">
+    <div class="rig-head"><span class="rig-no">装置 05</span><span class="rig-title">入口决策器</span><span class="rig-term">WHICH PRODUCT?</span></div>
+    <div class="rig-body">
+      <p class="rig-intro">初学者最常问的就是"我该用哪个"。点你的目标：</p>
+      <div class="dec-pills" id="decPills"><button class="pill active">只是问答、写作、总结资料</button><button class="pill">让 AI 完成一个复杂研究任务</button><button class="pill">让 AI 改代码、做网页、跑测试</button><button class="pill">把 AI 接进自己的产品或系统</button><button class="pill">做企业知识库 / 客服</button></div>
+      <div class="dec-panel" id="decPanel"><h4>建议：用成品聊天产品</h4>ChatGPT、Claude、DeepSeek、Kimi、豆包、通义都行。你买的是界面、额度、文件上传、搜索这些"整车配置"。免费版先用起来，不够再开会员。<div class="eg">对应：产品层 · 会员订阅</div></div>
+    </div>
+  </div>
+
+  <p class="metaline" style="display:block;">产品大致三类：<b>综合型</b>（ChatGPT / Claude / 豆包 / 通义——聊天+文件+图片+搜索按套餐开放）、<b>纯净型</b>（DeepSeek App——克制的聊天框）、<b>工作台型</b>（Claude Code / Codex / TRAE——重点不是聊天，而是在代码环境里干活）。</p>
+
+  <div class="pager">
+    <button data-go="2">← 上一章<small>CH.02 能力层</small></button>
+    <button class="next" data-go="4">下一章：Agent 层 →<small>CH.04 从回答到办事</small></button>
+  </div>
+</section>
+
+<!-- ========================================================= 第4页 Agent层 -->
+<section class="page" id="pg4">
+  <div class="pg-head">
+    <div class="pg-tag">CHAPTER 04 / AGENT 层</div>
+    <h1>司机：从"回答问题"到"完成任务"</h1>
+    <span class="metaline">🧑‍✈️ 比喻：Agent = 会自己开车送货的司机。判断标准：是"告诉你怎么做"，还是"自己做完交给你"。</span>
+  </div>
+
+  <div class="rig">
+    <div class="rig-head"><span class="rig-no">装置 06</span><span class="rig-title">Agent 流水线模拟器</span><span class="rig-term">AGENT LOOP</span></div>
+    <div class="rig-body">
+      <p class="rig-intro"><b>Agent = 模型 + 工具 + 自主规划</b>。点击运行，看一个编程 Agent 的真实工作流——注意 token 油表，这就是 Agent 烧钱的原因：</p>
+      <div class="row">
+        <button class="btn primary" id="agentRun">▶ 运行任务："帮我做一个库存看板网页"</button>
+        <button class="btn" id="agentReset">↺ 重置</button>
+      </div>
+      <div class="steps" id="agentSteps">
+        <div class="step"><span class="ico">📋</span>理解需求，把任务拆成 5 个子步骤<span class="who">规划</span></div>
+        <div class="step"><span class="ico">📄</span>调用工具：读取你上传的库存 Excel<span class="who">工具 ×1</span></div>
+        <div class="step"><span class="ico">💻</span>编写网页代码（HTML + 图表）<span class="who">生成</span></div>
+        <div class="step"><span class="ico">🧪</span>调用工具：运行代码自测<span class="who">工具 ×2</span></div>
+        <div class="step err"><span class="ico">⚠️</span>发现图表数据没对齐——自己定位出错的列<span class="who">自查</span></div>
+        <div class="step"><span class="ico">🔁</span>修改代码，再次验证通过<span class="who">工具 ×3</span></div>
+        <div class="step done-mark"><span class="ico">✅</span>交付：一个能打开的看板网页文件<span class="who">完成</span></div>
+      </div>
+      <div class="meter-label"><span>TOKEN 油表</span><span id="meterNum">0 tokens</span></div>
+      <div class="meter"><div class="meter-fill" id="meterFill"></div></div>
+      <p class="vs-chat">普通聊天问一句 ≈ 1,000 token；这个任务跑完 ≈ <b>82,000 token</b>（80 倍）。这就是"龙虾套餐"和 Coding Plan 存在的原因。</p>
+    </div>
+  </div>
+
+  <div class="rig">
+    <div class="rig-head"><span class="rig-no">装置 07</span><span class="rig-title">五阶段：从聊天模型搭成 Agent</span><span class="rig-term">BUILD-AN-AGENT</span></div>
+    <div class="rig-body">
+      <p class="rig-intro">Agent 不是凭空出现的，是给模型一层层加零件。点击各阶段，看同一个任务（"帮我做一个产品介绍网页"）在每个阶段的产出差别：</p>
+      <div class="build-bar" id="buildBar">
+        <div class="bstage got cur" data-b="0"><span class="bi">🧠</span><b>① 只有 Model</b><br>能理解能回答</div>
+        <div class="bstage" data-b="1"><span class="bi">🔧</span><b>② + Tools</b><br>能执行动作</div>
+        <div class="bstage" data-b="2"><span class="bi">📖</span><b>③ + Skill</b><br>有专业流程</div>
+        <div class="bstage" data-b="3"><span class="bi">🗂️</span><b>④ + 记忆/上下文</b><br>能持续推进</div>
+        <div class="bstage" data-b="4"><span class="bi">🔍</span><b>⑤ + 检查器</b><br>能验证修正</div>
+      </div>
+      <div class="build-panel">
+        <div class="bp-q">USER：帮我做一个产品介绍网页，最好能直接打开。</div>
+        <div id="buildDesc">此刻它只有"嘴"。它完全懂怎么做网页，但只能把代码以文字形式打给你，保存、打开、调试全得你自己来。</div>
+        <div class="bp-a" id="buildAns"><span style="font-family:var(--mono);font-size:10.5px;color:#999;">AI：</span>"好的，以下是网页代码：&lt;html&gt;…（一大段代码文字）…请你复制保存为 .html 文件后用浏览器打开。"</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rig">
+    <div class="rig-head"><span class="rig-no">装置 08</span><span class="rig-title">Tool 与 Skill 辨析台</span><span class="rig-term">TOOL / SKILL / MCP</span></div>
+    <div class="rig-body">
+      <p class="rig-intro">上面反复出现的两个零件要分清：<b>Tool 决定"能做什么动作"，Skill 决定"做得专业不专业"</b>。工具是手，技能是手艺：</p>
+      <div class="tri-grid">
+        <div class="tri"><h4>🔧 Tool 工具</h4><div class="who2">= 手和设备 · 动作能力</div>Agent 能执行的<b>具体动作</b>：搜索、运行代码、读写文件、查数据库。<b>没有"文件创建"工具，模型再聪明也只能把代码打在聊天框里。</b></div>
+        <div class="tri"><h4>📖 Skill 技能</h4><div class="who2">= 操作规范 · 经验知识</div>预先写好的<b>"岗位操作手册"</b>，Agent 动手前先读。不增加任何新动作，只让产出从"随意发挥"变成"按行业标准交付"。</div>
+        <div class="tri"><h4>🔌 MCP 插口</h4><div class="who2">= 标准接口 · 扩展工具清单</div>给 Agent <b>接入新工具</b>的统一标准：日历、邮箱、数据库、内部系统都能变成它的新工具。</div>
+      </div>
+      <table class="cmp-table">
+        <tbody><tr><th></th><th>Tool 工具</th><th>Skill 技能</th></tr>
+        <tr><td>本质</td><td>一个可调用的能力或接口</td><td>一套方法、规则、流程和经验</td></tr>
+        <tr><td>像什么</td><td>手、脚、眼睛、外接设备</td><td>说明书、SOP、岗位培训手册</td></tr>
+        <tr><td>例子</td><td>浏览器、文件系统、终端、数据库、图像生成器</td><td>Excel 处理规范、PPT 制作流程、代码审查清单</td></tr>
+        <tr><td>没有它会怎样</td><td>AI 只能说，不能真的做</td><td>AI 能做，但流程不稳、漏步骤、格式不专业</td></tr>
+      </tbody></table>
+      <p class="rig-intro" style="margin-top:16px;">下面演示 Skill 的作用（假设已配好"文件创建"等工具）——点一个任务，看 Agent 会自动翻哪本操作手册：</p>
+      <div class="task-pills">
+        <button class="pill active" data-task="ppt">做一份 PPT</button>
+        <button class="pill" data-task="doc">写一份 Word 报告</button>
+        <button class="pill" data-task="xls">处理 Excel 数据</button>
+        <button class="pill" data-task="web">搭一个网页</button>
+      </div>
+      <div class="skill-shelf">
+        <div class="skill-card lit" id="sk-ppt"><span class="si">📊</span>pptx 技能<br><small>幻灯片规范</small></div>
+        <div class="skill-card" id="sk-doc"><span class="si">📝</span>docx 技能<br><small>文档排版规范</small></div>
+        <div class="skill-card" id="sk-xls"><span class="si">📈</span>xlsx 技能<br><small>表格公式规范</small></div>
+        <div class="skill-card" id="sk-web"><span class="si">🎨</span>前端设计技能<br><small>网页设计规范</small></div>
+      </div>
+      <div class="skill-detail" id="skillDetail"><div class="sd-title">已装备：pptx 技能（幻灯片操作规范）</div>规范示例：统一母版与字号层级 / 每页一个核心观点 / 图表用可编辑对象而非截图 / 导出前自检字体。</div>
+      <div class="ba-grid">
+        <div class="ba bad"><h5>✗ 有工具 · 不带技能</h5><span id="baBad">文字全堆在一页，字号忽大忽小，图表是糊的截图，打开还提示缺字体。</span></div>
+        <div class="ba good"><h5>✓ 有工具 · 装备技能</h5><span id="baGood">16 页结构清晰的 PPT：封面-目录-分节-数据页-结论，图表可编辑，拿去就能汇报。</span></div>
+      </div>
+      <div class="mcp-note">🧭 <b>一句话：</b>Tool 给 Agent 一双手（能不能做），Skill 给它一身手艺（做得好不好），MCP 给它一排标准插口（手还能伸多远）。</div>
+    </div>
+  </div>
+
+  <div class="rig">
+    <div class="rig-head"><span class="rig-no">装置 09</span><span class="rig-title">"是不是 Agent"光谱仪</span><span class="rig-term">SPECTRUM</span></div>
+    <div class="rig-body">
+      <p class="rig-intro">"ChatGPT 是不是 Agent？"——这不是开关，是光谱。点三档对比：</p>
+      <div class="spectrum" role="tablist">
+        <button class="spec-btn active" data-spec="0">第一档 · 纯聊天<br><small>只有嘴</small></button>
+        <button class="spec-btn" data-spec="1">第二档 · 聊天+工具<br><small>有嘴有手</small></button>
+        <button class="spec-btn" data-spec="2">第三档 · 完整 Agent<br><small>有自主规划</small></button>
+      </div>
+      <div class="spec-panel" id="specPanel"><b>纯聊天：</b>你问它答，所有"动作"靠它打字输出、你自己执行。它能把网页代码写给你看，但存成文件、打开运行都得你来。<div class="ex">例子：DeepSeek 官方 App、早期 ChatGPT。"DeepSeek 只能对话"的真相——不是模型不会，是这台车没配工具。</div></div>
+    </div>
+  </div>
+
+  <div class="pager">
+    <button data-go="3">← 上一章<small>CH.03 产品层</small></button>
+    <button class="next" data-go="5">下一章：开发者层 →<small>CH.05 会员 / API / Coding Plan</small></button>
+  </div>
+</section>
+
+<!-- ========================================================= 第5页 开发者层 -->
+<section class="page" id="pg5">
+  <div class="pg-head">
+    <div class="pg-tag">CHAPTER 05 / 开发者层</div>
+    <h1>车队：把 AI 接进自己的系统</h1>
+    <span class="metaline">🏭 比喻：不满足于租车？通过 API 把发动机买回去，组自己的车队。</span>
+    <p class="pg-desc">同一家 AI 公司，为什么又卖会员、又卖 API、还卖 Coding Plan？因为面向三种人。这也是"AI 公司怎么赚钱"的答案。</p>
+  </div>
+
+  <div class="rig">
+    <div class="rig-head"><span class="rig-no">装置 10</span><span class="rig-title">三种加油方式计算器</span><span class="rig-term">会员 / API / CODING PLAN</span></div>
+    <div class="rig-body">
+      <p class="rig-intro">拖动滑块改变你的月用量，看哪种付费方式最划算（按国产旗舰典型价位估算，仅示意）：</p>
+      <label class="small">我每月大约用掉 <span class="usage-readout" id="usageNum">1.1</span> 百万 token（≈ <span class="usage-readout" id="usageChars">83 万字</span>）</label>
+      <input type="range" id="paySlider" min="0" max="100" value="22" aria-label="月用量">
+      <div class="pay-grid">
+        <div class="pay-card best" id="payMember">
+          <h4>会员订阅<span class="best-tag">推荐</span></h4>
+          <div class="who2">普通用户 · 在官方 App 里聊天</div>
+          <div class="cost">¥98<small> /月 固定</small></div>
+          <div class="note2">省心，但只能在 App 里手动用，<b>不能</b>接进程序或编程工具。轻度日常首选。</div>
+        </div>
+        <div class="pay-card" id="payApi">
+          <h4>API 按量<span class="best-tag">推荐</span></h4>
+          <div class="who2">开发者 · 接进自己的程序</div>
+          <div class="cost" id="apiCost">¥13<small> /月 按量</small></div>
+          <div class="note2">用多少付多少（按混合单价 ¥12/百万 token 估算）。把 AI 装进自己的工具或系统，只能走这条路。</div>
+        </div>
+        <div class="pay-card" id="payCoding">
+          <h4>Coding Plan<span class="best-tag">推荐</span></h4>
+          <div class="who2">程序员 · 在编程 Agent 工具里用</div>
+          <div class="cost">¥99<small> /月 含 ~50M token</small></div>
+          <div class="note2" id="codingNote">包月送大额 token（约月费 15~30 倍的量），专供 Claude Code 等工具。Agent 烧 token 凶，重度编程必选。</div>
+        </div>
+      </div>
+      <p class="hint">三者不互斥：上班用公司的 API 做产品，自己订个会员日常问答，写代码再开一份 Coding Plan。</p>
+    </div>
+  </div>
+
+  <div class="pg-head" style="padding-top:6px;">
+    <h1 style="font-size:21px;">进阶选读：企业车队的三个改装件</h1>
+    <p class="pg-desc">这三个词初学者先混个脸熟即可，等真要"把 AI 接进业务"时再深入。</p>
+  </div>
+  <div class="adv-grid">
+    <div class="adv"><h4>RAG<span class="tagx">进阶</span></h4>= 开卷考试。回答前先从你的资料库里检索相关内容，再让模型"看着资料答题"。企业知识库、客服问答的标配。</div>
+    <div class="adv"><h4>Embedding<span class="tagx">进阶</span></h4>= 给资料编"语义坐标"。把文字转成向量，让系统能搜到"意思相近"而不只是"字面相同"的内容。RAG 的检索靠它。</div>
+    <div class="adv"><h4>Fine-tuning 微调<span class="tagx">进阶</span></h4>= 岗前特训。用你的样例继续训练模型，让它稳定学会某种格式或风格。注意：多数知识库需求用 RAG 就够，不必微调。</div>
+  </div>
+
+  <div class="pager">
+    <button data-go="4">← 上一章<small>CH.04 Agent 层</small></button>
+    <button class="next" data-go="6">附录 A：公司车间 →<small>国内外 12 家按五层拆</small></button>
+  </div>
+</section>
+
+<!-- ========================================================= 第6页 公司车间 -->
+<section class="page" id="pg6">
+  <div class="pg-head">
+    <div class="pg-tag">APPENDIX A / 公司车间巡礼</div>
+    <h1>国内外 12 家：每家在五层各造了什么</h1>
+    <p class="pg-desc">学会五层框架后，看任何 AI 公司都按这个套路拆：发动机（模型）→ 整车（产品）→ 司机（Agent）→ 车队服务（开发者平台）。橙色刻度是 Agent 化投入程度（示意）。</p>
+  </div>
+  <div class="tabs">
+    <button class="tab active" data-region="cn">🇨🇳 国内 8 家</button>
+    <button class="tab" data-region="intl">🌍 国外 4 家</button>
+  </div>
+  <div class="factory" id="factoryGrid"><div class="fc"><div class="fc-head"><span class="fc-name">DeepSeek 深度求索</span><span class="fc-pos">不造整车的发动机厂</span></div><div class="fc-row"><span class="fc-k m">发动机</span><span>V4-Pro / V4-Flash（开源，全系 1M 上下文）</span></div><div class="fc-row"><span class="fc-k p">整车</span><span>DeepSeek App（克制的纯聊天）</span></div><div class="fc-row"><span class="fc-k a">司机</span><span>不自营 Agent；V4 专为 Agent 强化，当全行业的发动机</span></div><div class="fc-row"><span class="fc-k d">车队服务</span><span>DeepSeek API（极致性价比，¥1/¥2 起）</span></div><div class="gauge">Agent 化投入：<span class="dotg on"></span><span class="dotg on"></span><span class="dotg"></span><span class="dotg"></span><span class="dotg"></span></div></div><div class="fc"><div class="fc-head"><span class="fc-name">阿里巴巴 · 通义</span><span class="fc-pos">全栈厂</span></div><div class="fc-row"><span class="fc-k m">发动机</span><span>Qwen3.7-Max / Plus、Qwen3.6 系列（部分开源）</span></div><div class="fc-row"><span class="fc-k p">整车</span><span>通义 App、夸克、钉钉 AI</span></div><div class="fc-row"><span class="fc-k a">司机</span><span>Qwen3.7 整代围绕 Agent 设计；AgentKit、通义灵码</span></div><div class="fc-row"><span class="fc-k d">车队服务</span><span>百炼 Model Studio（还代销多家模型）</span></div><div class="gauge">Agent 化投入：<span class="dotg on"></span><span class="dotg on"></span><span class="dotg on"></span><span class="dotg on"></span><span class="dotg on"></span></div></div><div class="fc"><div class="fc-head"><span class="fc-name">字节跳动 · 豆包</span><span class="fc-pos">产品力最强的整车厂</span></div><div class="fc-row"><span class="fc-k m">发动机</span><span>Seed 2.0 系列、Seedance 视频、Seedream 图像</span></div><div class="fc-row"><span class="fc-k p">整车</span><span>豆包 App、飞书 / 剪映生态</span></div><div class="fc-row"><span class="fc-k a">司机</span><span>扣子 Coze（零代码搭 Agent）、TRAE 编程</span></div><div class="fc-row"><span class="fc-k d">车队服务</span><span>火山方舟（调用量国内第一）+ Coding Plan</span></div><div class="gauge">Agent 化投入：<span class="dotg on"></span><span class="dotg on"></span><span class="dotg on"></span><span class="dotg on"></span><span class="dotg on"></span></div></div><div class="fc"><div class="fc-head"><span class="fc-name">月之暗面 · Kimi</span><span class="fc-pos">长文本起家的精品店</span></div><div class="fc-row"><span class="fc-k m">发动机</span><span>K2.6 / K2.5（部分开源，256K）</span></div><div class="fc-row"><span class="fc-k p">整车</span><span>Kimi App（长文档强项）</span></div><div class="fc-row"><span class="fc-k a">司机</span><span>Kimi Code、Kimi Researcher 研究型 Agent</span></div><div class="fc-row"><span class="fc-k d">车队服务</span><span>Moonshot API（长上下文+工具调用）</span></div><div class="gauge">Agent 化投入：<span class="dotg on"></span><span class="dotg on"></span><span class="dotg on"></span><span class="dotg on"></span><span class="dotg"></span></div></div><div class="fc"><div class="fc-head"><span class="fc-name">智谱 AI · GLM</span><span class="fc-pos">开发者口碑厂</span></div><div class="fc-row"><span class="fc-k m">发动机</span><span>GLM-5.1 / 5V（编程基准世界前列，部分开源）</span></div><div class="fc-row"><span class="fc-k p">整车</span><span>智谱清言、Z.ai</span></div><div class="fc-row"><span class="fc-k a">司机</span><span>AutoGLM 操作手机 GUI；最早推"龙虾套餐"</span></div><div class="fc-row"><span class="fc-k d">车队服务</span><span>bigmodel.cn + Coding Plan ¥20/月起</span></div><div class="gauge">Agent 化投入：<span class="dotg on"></span><span class="dotg on"></span><span class="dotg on"></span><span class="dotg on"></span><span class="dotg on"></span></div></div><div class="fc"><div class="fc-head"><span class="fc-name">百度 · 文心</span><span class="fc-pos">B 端行业渠道商</span></div><div class="fc-row"><span class="fc-k m">发动机</span><span>ERNIE 5.0 / 5.1（开源）/ X1.1</span></div><div class="fc-row"><span class="fc-k p">整车</span><span>文心一言、百度搜索 AI 化</span></div><div class="fc-row"><span class="fc-k a">司机</span><span>千帆 AgentBuilder、智能体商店</span></div><div class="fc-row"><span class="fc-k d">车队服务</span><span>千帆平台（政务金融私有化强）</span></div><div class="gauge">Agent 化投入：<span class="dotg on"></span><span class="dotg on"></span><span class="dotg on"></span><span class="dotg"></span><span class="dotg"></span></div></div><div class="fc"><div class="fc-head"><span class="fc-name">腾讯 · 混元</span><span class="fc-pos">微信入口的生态厂</span></div><div class="fc-row"><span class="fc-k m">发动机</span><span>HY 2.0 Think / Instruct、TurboS、T1</span></div><div class="fc-row"><span class="fc-k p">整车</span><span>腾讯元宝（接微信生态）、ima</span></div><div class="fc-row"><span class="fc-k a">司机</span><span>元器（Agent 可发布进微信）、CodeBuddy</span></div><div class="fc-row"><span class="fc-k d">车队服务</span><span>腾讯云 TokenHub（服务迁移中）</span></div><div class="gauge">Agent 化投入：<span class="dotg on"></span><span class="dotg on"></span><span class="dotg on"></span><span class="dotg on"></span><span class="dotg"></span></div></div><div class="fc"><div class="fc-head"><span class="fc-name">MiniMax</span><span class="fc-pos">多模态内容生成特长生</span></div><div class="fc-row"><span class="fc-k m">发动机</span><span>MiniMax 文本 / 语音 / 视频模型</span></div><div class="fc-row"><span class="fc-k p">整车</span><span>海螺 AI（视频生成出圈）</span></div><div class="fc-row"><span class="fc-k a">司机</span><span>不主打自有 Agent，常被其他 Agent 平台调用</span></div><div class="fc-row"><span class="fc-k d">车队服务</span><span>MiniMax API（语音视频能力强）</span></div><div class="gauge">Agent 化投入：<span class="dotg on"></span><span class="dotg on"></span><span class="dotg"></span><span class="dotg"></span><span class="dotg"></span></div></div></div>
+  <div class="pager">
+    <button data-go="5">← 第五章<small>CH.05 开发者层</small></button>
+    <button class="next" data-go="7">附录 B：术语表 →<small>按层归位的词典</small></button>
+  </div>
+</section>
+
+<!-- ========================================================= 第7页 术语表 -->
+<section class="page" id="pg7">
+  <div class="pg-head">
+    <div class="pg-tag">APPENDIX B / 随车文档</div>
+    <h1>术语速查表（按层归位）</h1>
+    <p class="pg-desc">每个词标注了它属于哪一层——下次遇到新词，先问"它在第几层"，就不容易晕。</p>
+  </div>
+  <div class="glossary">
+    <div class="g-item"><span class="g-term">模型层｜LLM</span><span>大语言模型，"发动机"本体</span></div>
+    <div class="g-item"><span class="g-term">模型层｜Token</span><span>计费与容量单位，≈1.5~2 个汉字</span></div>
+    <div class="g-item"><span class="g-term">模型层｜上下文</span><span>模型一次能看见的内容上限（水箱）</span></div>
+    <div class="g-item"><span class="g-term">模型层｜思考模式</span><span>答前先打草稿，更准但更慢更贵</span></div>
+    <div class="g-item"><span class="g-term">模型层｜多模态</span><span>能处理图 / 音 / 视频，不只文字</span></div>
+    <div class="g-item"><span class="g-term">模型层｜开源模型</span><span>权重公开可自行部署，数据不出本地</span></div>
+    <div class="g-item"><span class="g-term">模型层｜Prompt</span><span>你给模型的任务说明，写得越具体产出越好</span></div>
+    <div class="g-item"><span class="g-term">模型层｜幻觉</span><span>模型一本正经编错信息，重要数据需核实</span></div>
+    <div class="g-item"><span class="g-term">能力层｜Tool Call</span><span>模型决定调用外部工具（搜索/代码/数据库）的动作</span></div>
+    <div class="g-item"><span class="g-term">能力层｜缓存命中</span><span>重复内容打折计费，最低至原价 1/50</span></div>
+    <div class="g-item"><span class="g-term">产品层｜会员订阅</span><span>买成品产品的使用权：额度、功能、更强模型</span></div>
+    <div class="g-item"><span class="g-term">Agent层｜Agent</span><span>能自主拆任务、调工具、交付成品的 AI</span></div>
+    <div class="g-item"><span class="g-term">Agent层｜Tool 工具</span><span>Agent 能执行的动作：搜索、跑代码、读写文件</span></div>
+    <div class="g-item"><span class="g-term">Agent层｜Skill 技能</span><span>动手前先读的"操作规范"，管质量不管动作</span></div>
+    <div class="g-item"><span class="g-term">Agent层｜MCP</span><span>Agent 连接外部工具数据的"标准插口"</span></div>
+    <div class="g-item"><span class="g-term">Agent层｜OpenClaw 龙虾</span><span>开源个人 Agent 框架（claw=钳子故称龙虾），可接任意模型 API；智谱"龙虾套餐"即为其用户推出的 token 包月</span></div>
+    <div class="g-item"><span class="g-term">开发者层｜API</span><span>按量付费的模型调用接口，给程序用</span></div>
+    <div class="g-item"><span class="g-term">开发者层｜Coding Plan</span><span>编程场景的 token 包月套餐</span></div>
+    <div class="g-item"><span class="g-term">开发者层｜MaaS</span><span>Model as a Service，按 token 卖模型能力</span></div>
+    <div class="g-item g-adv"><span class="g-term">开发者层｜RAG</span><span>开卷考试：先检索你的资料，再让模型作答（进阶）</span></div>
+    <div class="g-item g-adv"><span class="g-term">开发者层｜Embedding</span><span>把文本转成向量做"语义搜索"（进阶）</span></div>
+    <div class="g-item g-adv"><span class="g-term">开发者层｜Fine-tuning</span><span>用样例继续训练模型学会格式风格（进阶）</span></div>
+  </div>
+  <div class="pager">
+    <button data-go="6">← 附录 A<small>公司车间</small></button>
+    <button class="next" data-go="0">回到总装线 ↩<small>HOME</small></button>
+  </div>
+</section>
+
+<footer class="wrap" style="padding-left:0;padding-right:0;">
+  <span>AI ASSEMBLY MANUAL · 2026.06 校对版 · 五层翻页版</span>
+  <span>数字为示意性近似 · 精确价格以各官网为准</span>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* ============ 翻页导航 ============ */
+const PAGES = 8;
+let cur = 0;
+function go(i, push=true){
+  i = Math.max(0, Math.min(PAGES-1, i));
+  cur = i;
+  document.querySelectorAll('.page').forEach((p,j)=>p.classList.toggle('show', j===i));
+  document.querySelectorAll('.nv').forEach((b)=>b.classList.toggle('active', Number(b.dataset.pg)===i));
+  document.getElementById('progress').style.width = ((i)/(PAGES-1)*100)+'%';
+  if(push) history.replaceState(null,'','#p'+i);
+  window.scrollTo({top:0});
+}
+document.querySelectorAll('.nv').forEach(b=>b.addEventListener('click',()=>go(Number(b.dataset.pg))));
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(Number(b.dataset.go))));
+document.addEventListener('keydown',e=>{
+  if(e.target.matches('textarea,input,select')) return;
+  if(e.key==='ArrowRight') go(cur+1);
+  if(e.key==='ArrowLeft') go(cur-1);
+});
+const m = location.hash.match(/^#p(\d)/);
+go(m ? Number(m[1]) : 0, false);
+
+/* ============ 首页：组装动画 ============ */
+const ASM_MAX = 5;
+let asmStage = 1;
+const ASM_CAP = [
+  '',
+  '第 1 步：先有一颗发动机——大模型（GPT-5.5、DeepSeek-V4、Qwen3.7-Max…）。此刻它只能"输入文字→输出文字"，还上不了路。',
+  '第 2 步：产品把发动机装进整车——ChatGPT 装的是 GPT-5.5，豆包装的是 Seed 2.0。注意：ChatGPT 是车的名字，GPT-5.5 才是发动机的名字。',
+  '第 3 步：加油。token 像油一样流进来。你买会员就是"包油费租车"（平台垫油钱、用额度限速），走 API 才是自己按升加油。',
+  '第 4 步：请上司机——Agent。没请司机时你自己就是司机（你说一步它动一步）；请了司机，车自己规划路线、送货、出错自己调头。',
+  '第 5 步：企业不满足于租车，通过 API 把发动机买回去组车队——你用的很多 App 里的"AI 助手"，背后就是这么接进去的。'
+];
+function setAsm(s){
+  asmStage = Math.max(1, Math.min(ASM_MAX, s));
+  const svg = document.getElementById('asmSvg');
+  svg.className.baseVal = 'asm-svg asm s'+asmStage;
+  document.querySelectorAll('.stepcard').forEach(c=>{
+    const n = Number(c.dataset.s);
+    c.classList.toggle('on', n===asmStage);
+    c.classList.toggle('past', n<asmStage);
+  });
+  document.querySelectorAll('.asm-dot').forEach((d,i)=>d.classList.toggle('on', i<asmStage));
+  document.getElementById('asmCaption').textContent = ASM_CAP[asmStage];
+  document.getElementById('asmNext').textContent = asmStage===ASM_MAX ? '✓ 总装完成' : '下一步 →';
+}
+const dotsBox = document.getElementById('asmDots');
+for(let i=0;i<ASM_MAX;i++){
+  const d=document.createElement('div'); d.className='asm-dot';
+  d.addEventListener('click',()=>setAsm(i+1)); dotsBox.appendChild(d);
+}
+document.getElementById('asmNext').addEventListener('click',()=>{ if(asmStage<ASM_MAX) setAsm(asmStage+1); else go(1); });
+document.getElementById('asmPrev').addEventListener('click',()=>setAsm(asmStage-1));
+document.querySelectorAll('.stepcard').forEach(c=>c.addEventListener('click',()=>setAsm(Number(c.dataset.s))));
+setAsm(1);
+
+/* ============ 装置01 Token ============ */
+const TK_COLORS = ['#dbeafe','#dcfce7','#fef3c7','#fde2e2','#ede9fe','#cffafe','#fce7f3','#e7f5e4'];
+function tokenize(text){
+  const tokens=[]; let buf=''; let cjk='';
+  const fE=()=>{ if(!buf)return; for(let i=0;i<buf.length;i+=4)tokens.push(buf.slice(i,i+4)); buf=''; };
+  const fC=()=>{ if(!cjk)return; let i=0,t=2; while(i<cjk.length){tokens.push(cjk.slice(i,i+t)); i+=t; t=t===2?1:2;} cjk=''; };
+  for(const ch of text){
+    if(/[\u4e00-\u9fff\u3400-\u4dbf]/.test(ch)){fE();cjk+=ch;}
+    else if(/[a-zA-Z0-9]/.test(ch)){fC();buf+=ch;}
+    else if(/\s/.test(ch)){fE();fC();}
+    else{fE();fC();tokens.push(ch);}
+  }
+  fE();fC();
+  return tokens.filter(t=>t.length);
+}
+function fmtMoney(v){
+  if(v===0)return '¥0';
+  if(v<0.01)return '¥'+v.toFixed(5);
+  if(v<1)return '¥'+v.toFixed(3);
+  return '¥'+v.toFixed(2);
+}
+function renderTokens(){
+  const text=document.getElementById('tkInput').value;
+  const [pin,pout]=document.getElementById('tkModel').value.split(',').map(Number);
+  const toks=tokenize(text);
+  const view=document.getElementById('tokenView'); view.innerHTML='';
+  toks.slice(0,300).forEach((t,i)=>{
+    const s=document.createElement('span'); s.className='tk'; s.textContent=t;
+    s.style.background=TK_COLORS[i%TK_COLORS.length];
+    s.style.animationDelay=Math.min(i*12,600)+'ms';
+    view.appendChild(s);
+  });
+  if(toks.length>300){const e=document.createElement('span');e.className='tk';e.style.background='#eee';e.textContent='…共 '+toks.length+' 块';view.appendChild(e);}
+  const n=toks.length;
+  document.getElementById('tkCount').textContent=n;
+  const ci=n/1e6*pin, co=n/1e6*pout;
+  document.getElementById('tkCostIn').textContent=fmtMoney(ci);
+  document.getElementById('tkCostOut').textContent=fmtMoney(co);
+  document.getElementById('tkCost10k').textContent=fmtMoney((ci+co)*10000);
+}
+document.getElementById('tkInput').addEventListener('input',renderTokens);
+document.getElementById('tkModel').addEventListener('change',renderTokens);
+renderTokens();
+
+/* ============ 装置02 水箱 ============ */
+const TPT=800;
+function renderTank(){
+  const cap=Number(document.getElementById('ctxModel').value);
+  const turns=Number(document.getElementById('ctxSlider').value);
+  document.getElementById('turnNum').textContent=turns;
+  const used=turns*TPT, pct=Math.min(used/cap*100,100);
+  document.getElementById('tankFill').style.height=pct+'%';
+  document.getElementById('tankPct').textContent=Math.round(used/cap*100)+'%';
+  const over=used-cap, of=document.getElementById('tankOver'), msg=document.getElementById('forgetMsg');
+  if(over>0){
+    of.style.height=Math.min(over/cap*100,38)+'%';
+    msg.style.display='block';
+    msg.innerHTML='💧 水箱已满！最早的 <b>'+Math.ceil(over/TPT)+'</b> 轮对话被挤出遗忘——模型已不记得你开头说过什么。换更大上下文的模型，或开新对话。';
+  }else{of.style.height='0';msg.style.display='none';}
+}
+document.getElementById('ctxModel').addEventListener('change',renderTank);
+document.getElementById('ctxSlider').addEventListener('input',renderTank);
+renderTank();
+
+/* ============ 装置03 思考模式 ============ */
+document.getElementById('thinkToggle').addEventListener('change',function(){
+  const on=this.checked;
+  document.getElementById('thinkLabel').textContent='思考模式：'+(on?'开':'关');
+  document.getElementById('cotBlock').style.display=on?'block':'none';
+  document.getElementById('answerText').innerHTML=on
+    ?'分两步：① 5 个受限仓先按上限各锁 10 台（共 50 台）；② 剩余 1,150 台在其余 33 个仓按销量权重重新归一化分配，并复检无新超容。<span style="color:#2a8f7c;font-size:12px;">（多花了 token，但把"回流重分"算对了）</span>'
+    :'先按销量比例直接分配即可，受限仓库分到多少就发多少。<span style="color:#b04a23;font-size:12px;">（快，但漏了"超容部分要回流重分"这一步）</span>';
+  document.getElementById('barTime').style.width=on?'82%':'18%';
+  document.getElementById('barCost').style.width=on?'78%':'12%';
+  document.getElementById('timeVal').textContent=on?'~25s':'~2s';
+  document.getElementById('costVal').textContent=on?'×8':'×1';
+});
+
+/* ============ 装置04 能力溯源台 ============ */
+const CAPS=[
+ {name:'写文章 / 总结翻译',v:'native',pipe:'用户输入 → 模型直接生成文字 → 输出。纯发动机性能，任何入口都有。'},
+ {name:'写代码（贴在聊天框里）',v:'native',pipe:'模型把代码以文字形式打给你 → 但保存成文件、运行调试得你自己来。这是"自带能力"和"工具增强"的分界线。'},
+ {name:'数学推理 / 复杂规划',v:'native',pipe:'模型自带，思考模式下更强（见第一章装置 03）。'},
+ {name:'看懂图片',v:'native',pipe:'前提是模型支持多模态。多模态模型直接"看"图理解；纯文本模型给它图也没用。'},
+ {name:'回答今天的新闻 / 价格',v:'tool',pipe:'模型自己的知识停留在训练截止日。产品给它配"搜索工具"：模型拟搜索词 → 调用搜索 → 读网页 → 总结作答。没有这个工具就只能靠旧记忆猜。'},
+ {name:'读 PDF / 生成 Word、Excel',v:'tool',pipe:'文件工具先把 PDF 解析成文本/图片给模型理解；生成时模型写内容，文档工具负责存成 .docx/.xlsx 文件。'},
+ {name:'做出能打开的网页',v:'tool',pipe:'模型写代码（自带）→ 文件工具保存（外挂）→ 终端运行验证（外挂）→ 浏览器预览（外挂）。缺了后三样，就只能给你一堆代码文字。'},
+ {name:'生成图片',v:'both',pipe:'方式 A：多模态模型自己会画，直接输出图。方式 B（更常见）：聊天模型把你的需求改写成提示词，再调用一个专门的图像生成模型。你看到的"AI 画图"往往是 B——两个模型在接力。'},
+ {name:'查订单 / 改工单 / 发消息',v:'tool',pipe:'模型生成结构化参数 → 调用公司内部系统 API → 通常还要权限审核和人工确认。这是企业 Agent 的标准形态。'}
+];
+const capBox=document.getElementById('capPills');
+CAPS.forEach((c,i)=>{
+  const b=document.createElement('button'); b.className='pill'+(i===0?' active':''); b.textContent=c.name;
+  b.addEventListener('click',()=>showCap(i)); capBox.appendChild(b);
+});
+function showCap(i){
+  document.querySelectorAll('#capPills .pill').forEach((p,j)=>p.classList.toggle('active',i===j));
+  const c=CAPS[i];
+  document.getElementById('vbN').classList.toggle('dim',c.v!=='native');
+  document.getElementById('vbT').classList.toggle('dim',c.v!=='tool');
+  document.getElementById('vbB').classList.toggle('dim',c.v!=='both');
+  document.getElementById('capPipe').innerHTML='<div class="pl-t">背后大概发生了什么</div>'+c.pipe;
+}
+showCap(0);
+
+/* ============ 装置05 入口决策器 ============ */
+const DECS=[
+ {q:'只是问答、写作、总结资料',t:'用成品聊天产品',d:'ChatGPT、Claude、DeepSeek、Kimi、豆包、通义都行。你买的是界面、额度、文件上传、搜索这些"整车配置"。免费版先用起来，不够再开会员。',e:'对应：产品层 · 会员订阅'},
+ {q:'让 AI 完成一个复杂研究任务',t:'用产品里的 Agent / 深度研究模式',d:'ChatGPT 的 Deep Research / Agent 模式、Kimi 的研究模式等：给一个目标，它自己搜几十个网页、交一份报告。',e:'对应：Agent 层（第二、三档）'},
+ {q:'让 AI 改代码、做网页、跑测试',t:'用编程 Agent 工作台',d:'Claude Code、Codex、TRAE、Cursor。它们在代码环境里自主干活。重度使用配一份 Coding Plan 更划算。',e:'对应：Agent 层 + Coding Plan'},
+ {q:'把 AI 接进自己的产品或系统',t:'用 API',d:'你的程序把输入发给模型、把输出接回来，按 token 付费。模型选型可以参考价格对比：国产 API 通常便宜一个数量级。',e:'对应：开发者层 · API'},
+ {q:'做企业知识库 / 客服',t:'用企业平台 + RAG',d:'阿里百炼、百度千帆、火山方舟这类平台：上传公司资料建知识库，让模型"开卷作答"，还带权限和审计。',e:'对应：开发者层 · 企业平台（见第五章进阶）'}
+];
+const decBox=document.getElementById('decPills');
+DECS.forEach((c,i)=>{
+  const b=document.createElement('button'); b.className='pill'+(i===0?' active':''); b.textContent=c.q;
+  b.addEventListener('click',()=>showDec(i)); decBox.appendChild(b);
+});
+function showDec(i){
+  document.querySelectorAll('#decPills .pill').forEach((p,j)=>p.classList.toggle('active',i===j));
+  const c=DECS[i];
+  document.getElementById('decPanel').innerHTML='<h4>建议：'+c.t+'</h4>'+c.d+'<div class="eg">'+c.e+'</div>';
+}
+showDec(0);
+
+/* ============ 装置06 Agent 流水线 ============ */
+let agentTimers=[];
+function agentReset(){
+  agentTimers.forEach(clearTimeout); agentTimers=[];
+  document.querySelectorAll('#agentSteps .step').forEach(s=>s.classList.remove('on'));
+  document.getElementById('meterFill').style.width='0%';
+  document.getElementById('meterNum').textContent='0 tokens';
+  document.getElementById('agentRun').disabled=false;
+}
+document.getElementById('agentReset').addEventListener('click',agentReset);
+document.getElementById('agentRun').addEventListener('click',function(){
+  agentReset(); this.disabled=true;
+  const steps=document.querySelectorAll('#agentSteps .step');
+  const stops=[6,16,38,52,60,76,100], total=82000;
+  steps.forEach((s,i)=>{
+    agentTimers.push(setTimeout(()=>{
+      s.classList.add('on');
+      document.getElementById('meterFill').style.width=stops[i]+'%';
+      document.getElementById('meterNum').textContent=Math.round(total*stops[i]/100).toLocaleString()+' tokens';
+      if(i===steps.length-1)document.getElementById('agentRun').disabled=false;
+    },700*(i+1)));
+  });
+});
+
+/* ============ 装置07 五阶段 ============ */
+const BUILDS=[
+ {d:'此刻它只有"嘴"。它完全懂怎么做网页，但只能把代码以文字形式打给你，保存、打开、调试全得你自己来。',a:'"好的，以下是网页代码：&lt;html&gt;…（一大段代码文字）…请你复制保存为 .html 文件后用浏览器打开。"'},
+ {d:'装上工具（手）：文件创建、终端、浏览器。它现在能真的把文件做出来了——但流程和审美全靠即兴发挥。',a:'"已生成 page.html，可以打开了。"（能用，但排版随意、手机上打开错位、配色是默认蓝）'},
+ {d:'装上 Skill（手艺）：动手前先读"网页设计规范"——配色系统、移动端适配、交互状态。同样的手，产出专业了一截。',a:'"已按设计规范生成页面：统一的视觉风格、手机电脑自适应。"'},
+ {d:'装上记忆/上下文（工作台帐）：记得住你的目标、之前的约定和中间产物，长任务不断片、不重复问。',a:'"沿用你上次定的品牌色和文案口吻，本次新增了产品对比模块。"'},
+ {d:'装上检查器（质检环）：自己打开预览、点按钮、查文字溢出，发现问题改完再验，直到能交付。这才是完整的 Agent 闭环：规划→执行→验证→修正。',a:'"已自测：交互正常、无溢出、移动端通过。这是最终文件链接。"'}
+];
+function setBuild(i){
+  document.querySelectorAll('.bstage').forEach((b,j)=>{
+    b.classList.toggle('got',j<=i);
+    b.classList.toggle('cur',j===i);
+  });
+  document.getElementById('buildDesc').innerHTML=BUILDS[i].d;
+  document.getElementById('buildAns').innerHTML='<span style="font-family:var(--mono);font-size:10.5px;color:#999;">AI：</span>'+BUILDS[i].a;
+}
+document.querySelectorAll('.bstage').forEach(b=>b.addEventListener('click',()=>setBuild(Number(b.dataset.b))));
+setBuild(0);
+
+/* ============ 装置08 Skill ============ */
+const SKILLS={
+ ppt:{card:'sk-ppt',title:'已装备：pptx 技能（幻灯片操作规范）',detail:'规范示例：统一母版与字号层级 / 每页一个核心观点 / 图表用可编辑对象而非截图 / 导出前自检字体。',bad:'文字全堆在一页，字号忽大忽小，图表是糊的截图，打开还提示缺字体。',good:'16 页结构清晰的 PPT：封面-目录-分节-数据页-结论，图表可编辑，拿去就能汇报。'},
+ doc:{card:'sk-doc',title:'已装备：docx 技能（文档排版规范）',detail:'规范示例：标题样式分级 / 自动目录 / 三线表规范 / 页眉页脚页码。',bad:'通篇正文无样式，目录手敲的（一改内容页码全错），表格边框粗细不一。',good:'带自动目录和规范样式的 Word：改完内容刷新目录即可，像正式交付物。'},
+ xls:{card:'sk-xls',title:'已装备：xlsx 技能（表格公式规范）',detail:'规范示例：数据区与计算区分离 / 用公式不写死数值 / 透视与条件格式 / 防合并单元格破坏排序。',bad:'结果全是写死的数字，源数据一更新全表作废；到处合并单元格没法筛选。',good:'公式驱动的活表格：粘进新数据，汇总、占比、图表自动全部更新。'},
+ web:{card:'sk-web',title:'已装备：前端设计技能（网页设计规范）',detail:'规范示例：配色字体系统化 / 移动端自适应 / 交互状态 / 避免模板感。',bad:'默认字体默认蓝，排版挤成一团，手机上布局全乱。',good:'有设计感的响应式页面：统一视觉语言，手机电脑都好看。'}
+};
+function equipSkill(key){
+  document.querySelectorAll('.task-pills .pill').forEach(p=>p.classList.toggle('active',p.dataset.task===key));
+  document.querySelectorAll('.skill-card').forEach(c=>c.classList.remove('lit'));
+  const s=SKILLS[key];
+  document.getElementById(s.card).classList.add('lit');
+  document.getElementById('skillDetail').innerHTML='<div class="sd-title">'+s.title+'</div>'+s.detail;
+  document.getElementById('baBad').textContent=s.bad;
+  document.getElementById('baGood').textContent=s.good;
+}
+document.querySelectorAll('.task-pills .pill').forEach(p=>p.addEventListener('click',()=>equipSkill(p.dataset.task)));
+equipSkill('ppt');
+
+/* ============ 装置09 光谱 ============ */
+const SPECS=[
+ {t:'<b>纯聊天：</b>你问它答，所有"动作"靠它打字输出、你自己执行。它能把网页代码写给你看，但存成文件、打开运行都得你来。',ex:'例子：DeepSeek 官方 App、早期 ChatGPT。"DeepSeek 只能对话"的真相——不是模型不会，是这台车没配工具。'},
+ {t:'<b>聊天 + 工具：</b>模型在回答中能自己调用工具——搜网、跑代码、生成文件、画图，通常在一次回答内单步完成"思考→动手→交付"。',ex:'例子：现在的 ChatGPT（"能生成文件"就是这档）、Claude 网页版。'},
+ {t:'<b>完整 Agent：</b>长时间自主执行多步任务——自己拆解目标、连续调用几十上百次工具、出错自己排查重试，直到交付成果，中间基本不需要你介入。',ex:'例子：Claude Code（一个编程任务可自主工作几十分钟）、ChatGPT Agent 模式（自己操作浏览器比价填表）、OpenClaw（龙虾）。'}
+];
+function setSpec(i){
+  document.querySelectorAll('.spec-btn').forEach((b,j)=>b.classList.toggle('active',i===j));
+  document.getElementById('specPanel').innerHTML=SPECS[i].t+'<div class="ex">'+SPECS[i].ex+'</div>';
+}
+document.querySelectorAll('.spec-btn').forEach(b=>b.addEventListener('click',()=>setSpec(Number(b.dataset.spec))));
+setSpec(0);
+
+/* ============ 装置10 付费计算器 ============ */
+const BLEND=12;
+function s2u(v){return +(0.2*Math.pow(2500,v/100)).toFixed(v<40?1:0);}
+function renderPay(){
+  const v=Number(document.getElementById('paySlider').value), u=s2u(v);
+  document.getElementById('usageNum').textContent=u<10?u.toFixed(1):Math.round(u);
+  document.getElementById('usageChars').textContent=(u*75>=10000?(u*75/10000).toFixed(1)+' 亿字':Math.round(u*75)+' 万字');
+  const api=u*BLEND;
+  document.getElementById('apiCost').innerHTML='¥'+Math.round(api)+'<small> /月 按量</small>';
+  document.querySelectorAll('.pay-card').forEach(c=>c.classList.remove('best'));
+  let best = u<8?'payMember':(u<=40?'payApi':'payCoding');
+  document.getElementById(best).classList.add('best');
+  document.getElementById('codingNote').innerHTML = u>40
+    ?'你当前用量按 API 要 ¥'+Math.round(api)+'/月，包月 ¥99 直接省 '+Math.max(0,Math.round((1-99/api)*100))+'%——这就是程序员都买它的原因。'
+    :'包月送大额 token（约月费 15~30 倍的量），专供 Claude Code 等工具。Agent 烧 token 凶，重度编程必选。';
+}
+document.getElementById('paySlider').addEventListener('input',renderPay);
+renderPay();
+
+/* ============ 附录A 厂商 ============ */
+const FIRMS={cn:[
+ {n:'DeepSeek 深度求索',pos:'不造整车的发动机厂',m:'V4-Pro / V4-Flash（开源，全系 1M 上下文）',p:'DeepSeek App（克制的纯聊天）',a:'不自营 Agent；V4 专为 Agent 强化，当全行业的发动机',d:'DeepSeek API（极致性价比，¥1/¥2 起）',g:2},
+ {n:'阿里巴巴 · 通义',pos:'全栈厂',m:'Qwen3.7-Max / Plus、Qwen3.6 系列（部分开源）',p:'通义 App、夸克、钉钉 AI',a:'Qwen3.7 整代围绕 Agent 设计；AgentKit、通义灵码',d:'百炼 Model Studio（还代销多家模型）',g:5},
+ {n:'字节跳动 · 豆包',pos:'产品力最强的整车厂',m:'Seed 2.0 系列、Seedance 视频、Seedream 图像',p:'豆包 App、飞书 / 剪映生态',a:'扣子 Coze（零代码搭 Agent）、TRAE 编程',d:'火山方舟（调用量国内第一）+ Coding Plan',g:5},
+ {n:'月之暗面 · Kimi',pos:'长文本起家的精品店',m:'K2.6 / K2.5（部分开源，256K）',p:'Kimi App（长文档强项）',a:'Kimi Code、Kimi Researcher 研究型 Agent',d:'Moonshot API（长上下文+工具调用）',g:4},
+ {n:'智谱 AI · GLM',pos:'开发者口碑厂',m:'GLM-5.1 / 5V（编程基准世界前列，部分开源）',p:'智谱清言、Z.ai',a:'AutoGLM 操作手机 GUI；最早推"龙虾套餐"',d:'bigmodel.cn + Coding Plan ¥20/月起',g:5},
+ {n:'百度 · 文心',pos:'B 端行业渠道商',m:'ERNIE 5.0 / 5.1（开源）/ X1.1',p:'文心一言、百度搜索 AI 化',a:'千帆 AgentBuilder、智能体商店',d:'千帆平台（政务金融私有化强）',g:3},
+ {n:'腾讯 · 混元',pos:'微信入口的生态厂',m:'HY 2.0 Think / Instruct、TurboS、T1',p:'腾讯元宝（接微信生态）、ima',a:'元器（Agent 可发布进微信）、CodeBuddy',d:'腾讯云 TokenHub（服务迁移中）',g:4},
+ {n:'MiniMax',pos:'多模态内容生成特长生',m:'MiniMax 文本 / 语音 / 视频模型',p:'海螺 AI（视频生成出圈）',a:'不主打自有 Agent，常被其他 Agent 平台调用',d:'MiniMax API（语音视频能力强）',g:2}
+],intl:[
+ {n:'OpenAI',pos:'行业风向标',m:'GPT-5.5、o3、Sora 视频',p:'ChatGPT（全球用户最多）',a:'ChatGPT Agent 模式、Deep Research、Codex',d:'OpenAI API、Agents SDK',g:5},
+ {n:'Anthropic',pos:'编程与 Agent 标杆',m:'Claude Fable 5、Opus 4.x、Sonnet 4.6、Haiku 4.5',p:'Claude.ai（带文件生成/代码执行）',a:'Claude Code 定义了编程 Agent 品类；Cowork 面向知识工作',d:'Claude API、MCP 生态发起者',g:5},
+ {n:'Google',pos:'生态整合之王',m:'Gemini 系列（原生多模态）',p:'Gemini App、NotebookLM、Workspace 集成',a:'Jules、Deep Research，Agent 长在全家桶里',d:'AI Studio、Vertex AI',g:4},
+ {n:'xAI',pos:'实时数据特色选手',m:'Grok 4 / Grok 3',p:'X（推特）内置，可读实时帖子',a:'相对早期，重心在实时问答',d:'xAI API',g:2}
+]};
+function renderFirms(region){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.region===region));
+  const grid=document.getElementById('factoryGrid'); grid.innerHTML='';
+  FIRMS[region].forEach(f=>{
+    const dots=Array.from({length:5},(_,i)=>'<span class="dotg'+(i<f.g?' on':'')+'"></span>').join('');
+    grid.insertAdjacentHTML('beforeend',
+      '<div class="fc"><div class="fc-head"><span class="fc-name">'+f.n+'</span><span class="fc-pos">'+f.pos+'</span></div>'+
+      '<div class="fc-row"><span class="fc-k m">发动机</span><span>'+f.m+'</span></div>'+
+      '<div class="fc-row"><span class="fc-k p">整车</span><span>'+f.p+'</span></div>'+
+      '<div class="fc-row"><span class="fc-k a">司机</span><span>'+f.a+'</span></div>'+
+      '<div class="fc-row"><span class="fc-k d">车队服务</span><span>'+f.d+'</span></div>'+
+      '<div class="gauge">Agent 化投入：'+dots+'</div></div>');
+  });
+}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>renderFirms(t.dataset.region)));
+renderFirms('cn');
+</script>
+
+
+</body></html>
