@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<!-- saved from url=(0047)file:///Users/frank/Downloads/finalai_1.html#p1 -->
 <html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI 装配手册 · 五层翻页版</title>
-<link rel="preconnect" href="https://fonts.googleapis.com/">
-<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-<link href="./aihandbook_files/css2" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@900&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#f6f4ec; --ink:#1c2430; --blue:#1f4e8c; --blue-deep:#143257;
@@ -298,11 +297,11 @@ footer{border-top:3px double var(--ink);padding:22px 0 46px;font-size:11.5px;col
 <body>
 
 <nav id="topnav">
-  <div id="progress" style="width: 14.2857%;"></div>
+  <div id="progress" style="width: 0%;"></div>
   <div class="nav-inner">
     <span class="nav-brand">AI 装配手册</span>
-    <button class="nv" data-pg="0"><span class="n">00</span>总装线</button>
-    <button class="nv active" data-pg="1"><span class="n">01</span>模型层·发动机</button>
+    <button class="nv active" data-pg="0"><span class="n">00</span>总装线</button>
+    <button class="nv" data-pg="1"><span class="n">01</span>模型层·发动机</button>
     <button class="nv" data-pg="2"><span class="n">02</span>能力层·配置</button>
     <button class="nv" data-pg="3"><span class="n">03</span>产品层·整车</button>
     <button class="nv" data-pg="4"><span class="n">04</span>Agent层·司机</button>
@@ -315,7 +314,7 @@ footer{border-top:3px double var(--ink);padding:22px 0 46px;font-size:11.5px;col
 <div class="wrap">
 
 <!-- ========================================================= 第0页 总装线 -->
-<section class="page" id="pg0">
+<section class="page show" id="pg0">
   <div class="pg-head">
     <div class="pg-tag">HOME / 总装线</div>
     <h1>一辆车是怎么跑起来的</h1>
@@ -446,7 +445,7 @@ footer{border-top:3px double var(--ink);padding:22px 0 46px;font-size:11.5px;col
 </section>
 
 <!-- ========================================================= 第1页 模型层 -->
-<section class="page show" id="pg1">
+<section class="page" id="pg1">
   <div class="pg-head">
     <div class="pg-tag">CHAPTER 01 / 模型层</div>
     <h1>发动机：大模型本体</h1>
@@ -547,7 +546,7 @@ footer{border-top:3px double var(--ink);padding:22px 0 46px;font-size:11.5px;col
     <div class="rig-head"><span class="rig-no">装置 04</span><span class="rig-title">能力溯源台</span><span class="rig-term">NATIVE vs TOOL-AUGMENTED</span></div>
     <div class="rig-body">
       <p class="rig-intro">点一个你见过的"AI 能力"，看它到底来自谁、背后大概发生了什么：</p>
-      <div class="cap-pills" id="capPills"><button class="pill active">写文章 / 总结翻译</button><button class="pill">写代码（贴在聊天框里）</button><button class="pill">数学推理 / 复杂规划</button><button class="pill">看懂图片</button><button class="pill">回答今天的新闻 / 价格</button><button class="pill">读 PDF / 生成 Word、Excel</button><button class="pill">做出能打开的网页</button><button class="pill">生成图片</button><button class="pill">查订单 / 改工单 / 发消息</button></div>
+      <div class="cap-pills" id="capPills"></div>
       <div class="verdict">
         <span class="v-badge native" id="vbN">🧠 模型自带</span>
         <span class="v-badge tool dim" id="vbT">🔧 工具外挂</span>
@@ -586,7 +585,7 @@ footer{border-top:3px double var(--ink);padding:22px 0 46px;font-size:11.5px;col
     <div class="rig-head"><span class="rig-no">装置 05</span><span class="rig-title">入口决策器</span><span class="rig-term">WHICH PRODUCT?</span></div>
     <div class="rig-body">
       <p class="rig-intro">初学者最常问的就是"我该用哪个"。点你的目标：</p>
-      <div class="dec-pills" id="decPills"><button class="pill active">只是问答、写作、总结资料</button><button class="pill">让 AI 完成一个复杂研究任务</button><button class="pill">让 AI 改代码、做网页、跑测试</button><button class="pill">把 AI 接进自己的产品或系统</button><button class="pill">做企业知识库 / 客服</button></div>
+      <div class="dec-pills" id="decPills"></div>
       <div class="dec-panel" id="decPanel"><h4>建议：用成品聊天产品</h4>ChatGPT、Claude、DeepSeek、Kimi、豆包、通义都行。你买的是界面、额度、文件上传、搜索这些"整车配置"。免费版先用起来，不够再开会员。<div class="eg">对应：产品层 · 会员订阅</div></div>
     </div>
   </div>
